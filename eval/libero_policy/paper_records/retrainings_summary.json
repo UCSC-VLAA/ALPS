@@ -1,0 +1,10 @@
+{
+ "bert_mean": 82.1,
+ "text_mean": 85.2,
+ "paired_gain": 3.1,
+ "ci95": [
+  -0.9,
+  7.1
+ ],
+ "bootstrap": "10,000 resamples of the three trainings, the ten tasks of every suite, and the rollouts (scripts/analyze_policies.py, seed 20261006)"
+}

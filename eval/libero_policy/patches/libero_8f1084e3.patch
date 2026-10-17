@@ -1,0 +1,197 @@
+diff --git a/libero/configs/policy/image_encoder/frozen_encoder_pool.yaml b/libero/configs/policy/image_encoder/frozen_encoder_pool.yaml
+new file mode 100644
+index 0000000..8fb8e66
+--- /dev/null
++++ b/libero/configs/policy/image_encoder/frozen_encoder_pool.yaml
+@@ -0,0 +1,16 @@
++# Frozen encoder + language-conditioned attention pool of the ALPS paper's LIBERO policies, a drop-in for
++# resnet_encoder.yaml. Choose the encoder with network_kwargs.encoder (and .weights); every key is explained in
++# eval/libero_policy/README.md of the ALPS repository. Defaults: a truly frozen encoder and the released model's arithmetic;
++# the paper's runs used encoder_train_mode=follow and, for ALPS, alps_port_numerics=true (scripts/run_paper_policies.sh).
++network: FrozenEncoderPool
++network_kwargs:
++    encoder: ""
++    weights: ""
++    num_queries: 1
++    pool_heads: 4
++    language_fusion: 'film'
++    flip_ud: true
++    resize: 224
++    autocast_dtype: bfloat16
++    encoder_train_mode: eval
++    alps_port_numerics: false
+diff --git a/libero/libero/envs/venv.py b/libero/libero/envs/venv.py
+index ed1fd40..864aaec 100644
+--- a/libero/libero/envs/venv.py
++++ b/libero/libero/envs/venv.py
+@@ -8,8 +8,13 @@ import time
+ 
+ from abc import ABC, abstractmethod
+ from collections import OrderedDict
+-from multiprocessing import Array, Pipe, connection
+-from multiprocessing.context import Process
++import multiprocessing as _mp
++import multiprocessing.connection as _mpc  # explicit: multiprocessing.connection is not loaded by `import multiprocessing` on py3.8
++# ALPS evaluation: start the simulator workers with spawn. A forked worker inherits the parent's EGL / CUDA context and
++# dies at its first render (each dead worker then counts as a failed rollout).
++_SPAWN = _mp.get_context("spawn")
++Array, Pipe, connection = _SPAWN.Array, _SPAWN.Pipe, _mpc
++Process = _SPAWN.Process
+ from typing import Any, Callable, List, Optional, Tuple, Union
+ 
+ 
+diff --git a/libero/lifelong/algos/multitask.py b/libero/lifelong/algos/multitask.py
+index e478c1f..4f16b23 100644
+--- a/libero/lifelong/algos/multitask.py
++++ b/libero/lifelong/algos/multitask.py
+@@ -7,6 +7,8 @@ import torch.nn.functional as F
+ from torch.utils.data import ConcatDataset, DataLoader, RandomSampler
+ 
+ from libero.lifelong.algos.base import Sequential
++from libero.lifelong.datasets import h5_worker_init
++import multiprocessing as _h5mp
+ from libero.lifelong.metric import *
+ from libero.lifelong.models import *
+ from libero.lifelong.utils import *
+@@ -34,8 +36,12 @@ class Multitask(Sequential):
+             concat_dataset,
+             batch_size=self.cfg.train.batch_size,
+             num_workers=self.cfg.train.num_workers,
++            # ALPS runs: main.py sets the global start method to spawn, which re-imports robomimic in every worker and
++            # loses its observation specs; fork keeps them, and h5_worker_init gives each worker its own hdf5 handle.
++            multiprocessing_context=(_h5mp.get_context("fork") if self.cfg.train.num_workers > 0 else None),
++            worker_init_fn=(h5_worker_init if self.cfg.train.num_workers > 0 else None),
+             sampler=RandomSampler(concat_dataset),
+-            persistent_workers=True,
++            persistent_workers=(self.cfg.train.num_workers > 0),
+         )
+ 
+         prev_success_rate = -1.0
+@@ -49,7 +55,11 @@ class Multitask(Sequential):
+         losses = []
+ 
+         # start training
++        # LIBERO_SKIP_EP0=1 (every ALPS policy): skip the zero-shot loss pass over the training set at epoch 0
++        skip_epoch0 = bool(os.environ.get("LIBERO_SKIP_EP0", ""))
+         for epoch in range(0, self.cfg.train.n_epochs + 1):
++            if skip_epoch0 and epoch == 0:
++                continue
+ 
+             t0 = time.time()
+             if epoch > 0 or (self.cfg.pretrain):  # update
+diff --git a/libero/lifelong/datasets.py b/libero/lifelong/datasets.py
+index f0b5a1c..052282b 100644
+--- a/libero/lifelong/datasets.py
++++ b/libero/lifelong/datasets.py
+@@ -137,3 +137,19 @@ class TruncatedSequenceDataset(Dataset):
+ 
+     def __getitem__(self, idx):
+         return self.sequence_dataset.__getitem__(idx)
++
++
++def h5_worker_init(_worker_id):
++    """DataLoader worker_init_fn (fork context): drop the hdf5 handles inherited from the parent, so that every worker
++    reopens its files lazily (robomimic's SequenceDataset.hdf5_file property)."""
++    import torch.utils.data as tud
++
++    stack = [tud.get_worker_info().dataset]
++    while stack:
++        d = stack.pop()
++        if hasattr(d, "datasets"):
++            stack.extend(d.datasets)
++        if hasattr(d, "sequence_dataset"):
++            stack.append(d.sequence_dataset)
++        if hasattr(d, "_hdf5_file"):
++            d._hdf5_file = None
+diff --git a/libero/lifelong/metric.py b/libero/lifelong/metric.py
+index 9777577..3525755 100644
+--- a/libero/lifelong/metric.py
++++ b/libero/lifelong/metric.py
+@@ -16,6 +16,10 @@ from libero.libero.utils.video_utils import VideoWriter
+ from libero.lifelong.utils import *
+ 
+ 
++# ALPS evaluation: rollout index (= initial state) -> success, for the last evaluate_one_task_success call
++LAST_SUCCESSES = {}
++
++
+ def raw_obs_to_tensor_obs(obs, task_emb, cfg):
+     """
+     Prepare the tensor observations as input for the algorithm.
+@@ -153,6 +157,7 @@ def evaluate_one_task_success(
+             for k in range(env_num):
+                 if i * env_num + k < cfg.eval.n_eval:
+                     num_success += int(dones[k])
++                    LAST_SUCCESSES[i * env_num + k] = bool(dones[k])
+ 
+         success_rate = num_success / cfg.eval.n_eval
+         env.close()
+diff --git a/libero/lifelong/models/bc_transformer_policy.py b/libero/lifelong/models/bc_transformer_policy.py
+index e9c8c3d..2ff8253 100644
+--- a/libero/lifelong/models/bc_transformer_policy.py
++++ b/libero/lifelong/models/bc_transformer_policy.py
+@@ -3,6 +3,7 @@ import torch
+ import torch.nn as nn
+ 
+ from libero.lifelong.models.modules.rgb_modules import *
++from libero.lifelong.models.modules.frozen_encoder_pool import FrozenEncoderPool
+ from libero.lifelong.models.modules.language_modules import *
+ from libero.lifelong.models.modules.transformer_modules import *
+ from libero.lifelong.models.base_policy import BasePolicy
+diff --git a/libero/lifelong/models/modules/frozen_encoder_pool.py b/libero/lifelong/models/modules/frozen_encoder_pool.py
+new file mode 100644
+index 0000000..f935919
+--- /dev/null
++++ b/libero/lifelong/models/modules/frozen_encoder_pool.py
+@@ -0,0 +1,23 @@
++# Copyright 2026 The ALPS Authors.
++# SPDX-License-Identifier: Apache-2.0
++"""Frozen-encoder image module of the LIBERO policies of the ALPS paper (`network: FrozenEncoderPool`,
++libero/configs/policy/image_encoder/frozen_encoder_pool.yaml).
++
++The implementation is eval/libero_policy/frozen_encoder_bridge.py of the ALPS repository; set ALPS_REPO to the root of that
++repository (the scripts in eval/libero_policy/scripts do). As in the paper's runs, importing it enables TF32 matrix products
++in the whole process."""
++import os
++import sys
++
++_ALPS_REPO = os.environ.get("ALPS_REPO", "")
++if _ALPS_REPO and os.path.abspath(_ALPS_REPO) not in sys.path:
++    sys.path.append(os.path.abspath(_ALPS_REPO))
++
++try:
++    from eval.libero_policy.frozen_encoder_bridge import FrozenEncoderPool  # noqa: F401
++except ImportError as _err:  # keep LIBERO usable without the ALPS repository (e.g. for its ResNet policies)
++    _IMPORT_ERROR = _err
++
++    class FrozenEncoderPool:
++        def __init__(self, *args, **kwargs):
++            raise ImportError("FrozenEncoderPool needs the ALPS repository (set ALPS_REPO to its root): %s" % _IMPORT_ERROR)
+diff --git a/libero/lifelong/utils.py b/libero/lifelong/utils.py
+index c0c3f10..6898c94 100644
+--- a/libero/lifelong/utils.py
++++ b/libero/lifelong/utils.py
+@@ -125,6 +125,11 @@ def create_experiment_dir(cfg):
+         f"./{prefix}/{cfg.benchmark_name}/{cfg.lifelong.algo}/"
+         + f"{cfg.policy.policy_type}_seed{cfg.seed}"
+     )
++    # ALPS runs: LIBERO_EXP_SUFFIX gives every policy its own experiment directory (trainings that share a directory race
++    # for the next run_<n>)
++    _sfx = os.environ.get("LIBERO_EXP_SUFFIX", "")
++    if _sfx:
++        experiment_dir += f"_{_sfx}"
+ 
+     if not os.path.exists(experiment_dir):
+         os.makedirs(experiment_dir)
+@@ -216,5 +221,11 @@ def get_task_embs(cfg, descriptions):
+             return_tensors="pt",  # ask the function to return PyTorch tensors
+         )
+         task_embs = model(**tokens)["pooler_output"].detach()
++    elif str(cfg.task_embedding_format).startswith("file:"):
++        # ALPS runs: precomputed instruction embeddings, e.g. of an encoder's own text tower (npz with "descriptions"
++        # and "embs"; eval/libero_policy/scripts/embed_instructions.py)
++        _d = np.load(str(cfg.task_embedding_format)[len("file:"):])
++        _table = {str(s): e for s, e in zip(_d["descriptions"], _d["embs"])}
++        task_embs = torch.tensor(np.stack([_table[s] for s in descriptions]), dtype=torch.float32)
+     cfg.policy.language_encoder.network_kwargs.input_size = task_embs.shape[-1]
+     return task_embs

@@ -1,0 +1,7 @@
+# DINOv2-B/14 (torch hub, x_norm_patchtokens, mean = std = 0.5 as in DINO-WM), 196-pixel input = 14 x 14 tokens
+# Frozen encoder of the world-model experiments (models/encoder/frozen_encoder.py). stats: npz of fit_stats.py for the task.
+_target_: models.encoder.frozen_encoder.FrozenTokenEncoder
+encoder: dinov2_b14
+res: 196
+stats: ???
+tf32: true    # TF32 inside the frozen encoder forward only

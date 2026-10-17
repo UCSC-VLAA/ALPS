@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alps-encoder"
+version = "0.1.0"
+description = "ALPS: visual state encoders for world models (inference, evaluation and training code)"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.9"
+dependencies = ["torch>=2.1", "numpy", "pillow"]
+
+[project.urls]
+Repository = "https://github.com/UCSC-VLAA/ALPS"
+Weights = "https://huggingface.co/UCSC-VLAA/ALPS"
+
+[project.optional-dependencies]
+safetensors = ["safetensors>=0.4"]
+decoder = ["diffusers>=0.27", "safetensors>=0.4"]
+timm = ["timm>=1.0"]
+test = ["pytest", "safetensors>=0.4", "timm>=1.0", "transformers>=4.30"]
+
+[tool.setuptools]
+packages = ["alps"]
+
+[tool.setuptools.package-data]
+alps = ["assets/*.txt", "assets/*.json"]
+
+[tool.pytest.ini_options]
+# `pytest` at the root runs the inference and evaluation tests; the training suites run from their own folders
+testpaths = ["tests", "eval"]
+markers = ["slow: end-to-end runs of the training scripts (tens of seconds on CPU)"]

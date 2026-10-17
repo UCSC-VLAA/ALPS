@@ -1,0 +1,24 @@
+# PushT: history 3 frames, frame skip 5; data folder pusht_noise of the DINO-WM release.
+task: pusht
+data_subdir: pusht_noise
+num_hist: 3
+frameskip: 5
+env:
+  name: pusht
+  args: []
+  kwargs:
+    with_velocity: true
+    with_target: true
+  dataset:
+    _target_: datasets.pusht_dset.load_pusht_slice_train_val
+    with_velocity: true
+    n_rollout: null
+    normalize_action: true
+    data_path: ???
+    split_ratio: 0.9
+    transform:
+      _target_: datasets.img_transforms.default_transform
+      img_size: 224
+    traj_subset: ???
+  decoder_path: null
+  num_workers: 16

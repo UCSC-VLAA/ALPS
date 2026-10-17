@@ -1,0 +1,73 @@
+# Reacher world model of the ALPS paper: the PreJEPA frozen-encoder baseline of stable-worldmodel / LeWorldModel
+# (scripts/train/prejepa.py config) as run for Table 3: history 3, frame skip 5, one predicted step, no proprioception,
+# action embedder 10 -> 10, causal predictor (6 layers, 16 heads, MLP 2048, width 768 + 10), batch 32 x learning rate 5e-4
+# (the reference of the learning-rate scaling), no weight decay, fp16 mixed precision, gradient clipping 1.0, split seed 42.
+# reacher_wm_train.py fills backbone.name, model.encoder.stats and model.encoder.weights and replaces the schedule.
+output_model_name: reacher_${backbone.name}
+subdir: reacher_${backbone.name}
+seed: 42
+dataset_name: reacher
+cache_dir: null
+n_steps: ${eval:'${wm.num_preds} + ${wm.history_size}'}
+frameskip: 5
+batch_size: 32
+num_workers: 8
+train_split: 0.9
+backbone:
+  name: ???
+  type: ${backbone.name}
+  is_video_encoder: false
+  interpolate_pos_encoding: true
+image_size: 224
+patch_size: 16
+wm:
+  history_size: 3
+  num_preds: 1
+  encoding:
+    action: 10
+predictor:
+  size: small
+  depth: 6
+  heads: 16
+  mlp_dim: 2048
+  dim_head: 64
+  dropout: 0.1
+  emb_dropout: 0.0
+model:
+  _target_: stable_worldmodel.wm.PreJEPA
+  history_size: ${wm.history_size}
+  num_pred: ${wm.num_preds}
+  interpolate_pos_encoding: ${backbone.interpolate_pos_encoding}
+  encoder:
+    _target_: frozen_backbone.FrozenTokens
+    name: ${backbone.name}
+    stats: ???
+    weights: null
+  predictor:
+    _target_: stable_worldmodel.wm.prejepa.module.CausalPredictor
+    num_patches: 196
+    num_frames: ${wm.history_size}
+    dim: 778
+    depth: ${predictor.depth}
+    heads: ${predictor.heads}
+    mlp_dim: ${predictor.mlp_dim}
+    dim_head: ${predictor.dim_head}
+    dropout: ${predictor.dropout}
+    emb_dropout: ${predictor.emb_dropout}
+  extra_encoders:
+    _target_: torch.nn.ModuleDict
+    modules:
+      action:
+        _target_: stable_worldmodel.wm.prejepa.module.Embedder
+        in_chans: 10
+        emb_dim: 10
+optimizer:
+  type: AdamW
+  lr: 0.0005
+  weight_decay: 0.0
+trainer:
+  precision: 16-mixed
+  gradient_clip_val: 1.0
+n_gpus: 1
+extra_dims:
+  action: 10

@@ -1,0 +1,49 @@
+# World-model configuration of the ALPS paper on the DINO-WM tasks, the part shared by every task and encoder.
+# make_run_config.py merges it with conf/wm/task/<task>.yaml and conf/encoder/frozen_<encoder>.yaml and writes the
+# resolved result as <run dir>/hydra.yaml, the file that wm_train.py, plan.py and the prediction evaluation read.
+# The values are those of the runs behind Tables 3 and 4 (the DINO-WM defaults with the predictor of models/vit_proj.py
+# and without a decoder).
+action_encoder:
+  _target_: models.proprio.ProprioceptiveEmbedding
+  num_frames: 1
+  tubelet_size: 1
+  use_3d_pos: false
+proprio_encoder:
+  _target_: models.proprio.ProprioceptiveEmbedding
+  num_frames: 1
+  tubelet_size: 1
+  use_3d_pos: false
+predictor:
+  _target_: models.vit_proj.ProjViTPredictor
+  proj_dim: 384
+  extra_dim: 20
+  bias: true
+  tied_init: true
+  depth: 6
+  heads: 16
+  mlp_dim: 2048
+  dropout: 0.1
+  emb_dropout: 0
+  pool: mean
+training:
+  batch_size: 32            # batch of the DINO-WM recipe; wm_train.py scales its learning rates by sqrt(256 / 32)
+  predictor_lr: 0.0005
+  action_encoder_lr: 0.0005
+img_size: 224
+concat_dim: 1
+normalize_action: true
+action_emb_dim: 10
+num_action_repeat: 1
+proprio_emb_dim: 10
+num_proprio_repeat: 1
+num_pred: 1
+has_predictor: true
+has_decoder: false
+model:
+  _target_: models.visual_world_model.VWorldModel
+  image_size: 224
+  num_hist: ${num_hist}
+  num_pred: 1
+  train_encoder: false
+  train_predictor: true
+  train_decoder: false

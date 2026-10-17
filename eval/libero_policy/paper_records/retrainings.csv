@@ -1,0 +1,12 @@
+instruction_embedding,training_seed,Long,Goal,Spatial,Object,mean
+BERT,0,63.5,85.1,86.5,92.2,81.8
+BERT,1,69.7,79.3,81.5,93.1,80.9
+BERT,2,75.3,82.9,82.4,93.7,83.6
+BERT,mean of the three,69.5,82.4,83.4,93.0,82.1
+own text tower,0,76.4,87.4,82.6,93.7,85.0
+own text tower,1,78.5,91.1,84.1,94.8,87.1
+own text tower,2,71.9,85.5,82.8,93.4,83.4
+own text tower,mean of the three,75.6,88.0,83.2,94.0,85.2
+own text tower minus BERT,0,+12.9,+2.3,-3.9,+1.5,+3.2
+own text tower minus BERT,1,+8.8,+11.8,+2.7,+1.7,+6.2
+own text tower minus BERT,2,-3.4,+2.5,+0.4,-0.3,-0.2

@@ -1,0 +1,15 @@
+# Learnable Linear(D -> 384) + the official ViTPredictor (dim 384 + 20 = 404; depth / heads / MLP / dropout of
+# conf/predictor/vit.yaml) + learnable Linear(384 -> D) on the visual channels (models/vit_proj.py).
+# `dim` (= encoder D + 20) is passed by the trainer exactly as for the official predictor; extra_dim = proprio_emb_dim *
+# num_proprio_repeat + action_emb_dim * num_action_repeat with concat_dim 1 (10 + 10).
+_target_: models.vit_proj.ProjViTPredictor
+proj_dim: 384
+extra_dim: 20
+bias: true
+tied_init: true
+depth: 6
+heads: 16
+mlp_dim: 2048
+dropout: 0.1
+emb_dropout: 0
+pool: mean

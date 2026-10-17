@@ -1,0 +1,190 @@
+policy,evaluation,eval_seed,rollouts,success_percent,task_0,task_1,task_2,task_3,task_4,task_5,task_6,task_7,task_8,task_9
+LIBERO-Long | ALPS (Stage 1) | BERT | seed 1,eval50,none,500,69.4,62,70,94,96,58,76,32,68,54,84
+LIBERO-Long | ALPS (Stage 1) | BERT | seed 1,eval50_repA,none,500,67.2,60,62,94,96,68,68,30,74,54,66
+LIBERO-Long | ALPS (Stage 1) | BERT | seed 1,eval50_repB,1,500,70.0,64,72,96,96,56,76,38,66,52,84
+LIBERO-Goal | ALPS (Stage 1) | BERT | seed 0,eval50,none,500,84.4,90,100,82,88,68,92,72,98,98,56
+LIBERO-Goal | ALPS (Stage 1) | BERT | seed 0,eval50_repA,none,500,83.0,94,96,82,82,74,94,66,96,88,58
+LIBERO-Goal | ALPS (Stage 1) | BERT | seed 0,eval50_repB,1,500,85.4,92,98,84,72,80,94,78,94,92,70
+LIBERO-Object | ALPS (Stage 1) | BERT | seed 0,eval50,none,500,94.2,88,94,100,98,98,96,86,92,98,92
+LIBERO-Object | ALPS (Stage 1) | BERT | seed 0,eval50_repA,none,500,94.8,96,96,100,96,94,86,86,100,98,96
+LIBERO-Object | ALPS (Stage 1) | BERT | seed 0,eval50_repB,1,500,94.0,90,94,98,98,90,86,92,94,98,100
+LIBERO-Spatial | ALPS (Stage 1) | BERT | seed 0,eval50,none,500,78.0,86,82,90,90,76,32,100,82,66,76
+LIBERO-Spatial | ALPS (Stage 1) | BERT | seed 0,eval50_repA,none,500,75.4,86,80,84,88,70,22,96,78,74,76
+LIBERO-Spatial | ALPS (Stage 1) | BERT | seed 0,eval50_repB,1,500,77.0,88,82,84,90,76,42,94,64,70,80
+LIBERO-Long | CLIP-B/16 | BERT | seed 1,eval50,none,500,54.2,48,50,72,96,46,46,22,66,26,70
+LIBERO-Long | CLIP-B/16 | BERT | seed 1,eval50_repA,none,500,57.8,50,52,80,88,46,64,30,72,18,78
+LIBERO-Long | CLIP-B/16 | BERT | seed 1,eval50_repB,1,500,56.8,46,52,86,86,34,64,34,64,26,76
+LIBERO-Long | CLIP-B/16 | own text tower | seed 1,eval50,none,500,62.0,58,70,68,94,44,66,44,68,36,72
+LIBERO-Long | CLIP-B/16 | own text tower | seed 1,eval50_repA,none,500,59.8,62,70,60,94,36,80,36,58,26,76
+LIBERO-Long | CLIP-B/16 | own text tower | seed 1,eval50_repB,1,500,62.6,68,76,70,96,48,76,26,60,32,74
+LIBERO-Goal | CLIP-B/16 | BERT | seed 0,eval50,none,500,75.2,98,86,82,52,30,80,76,96,66,86
+LIBERO-Goal | CLIP-B/16 | BERT | seed 0,eval50_repA,none,500,73.8,88,78,84,66,38,74,72,96,66,76
+LIBERO-Goal | CLIP-B/16 | BERT | seed 0,eval50_repB,1,500,73.4,94,78,86,48,42,78,70,100,62,76
+LIBERO-Goal | CLIP-B/16 | own text tower | seed 0,eval50,none,500,84.0,96,90,100,60,98,84,54,100,72,86
+LIBERO-Goal | CLIP-B/16 | own text tower | seed 0,eval50_repA,none,500,85.2,100,96,96,60,100,90,52,100,72,86
+LIBERO-Goal | CLIP-B/16 | own text tower | seed 0,eval50_repB,1,500,83.8,96,94,98,66,94,84,54,100,74,78
+LIBERO-Object | CLIP-B/16 | BERT | seed 0,eval50,none,500,92.6,96,76,98,92,88,92,100,92,100,92
+LIBERO-Object | CLIP-B/16 | BERT | seed 0,eval50_repA,none,500,92.8,98,78,98,84,92,94,100,92,98,94
+LIBERO-Object | CLIP-B/16 | BERT | seed 0,eval50_repB,1,500,94.2,98,84,96,92,96,94,100,90,100,92
+LIBERO-Object | CLIP-B/16 | own text tower | seed 0,eval50,none,500,92.4,90,92,94,100,92,88,94,90,98,86
+LIBERO-Object | CLIP-B/16 | own text tower | seed 0,eval50_repA,none,500,90.6,88,96,94,98,92,80,94,86,98,80
+LIBERO-Object | CLIP-B/16 | own text tower | seed 0,eval50_repB,1,500,92.6,92,94,92,100,90,94,86,84,98,96
+LIBERO-Spatial | CLIP-B/16 | BERT | seed 0,eval50,none,500,76.6,84,66,84,74,82,56,86,88,58,88
+LIBERO-Spatial | CLIP-B/16 | BERT | seed 0,eval50_repA,none,500,79.4,86,78,82,84,84,58,88,78,68,88
+LIBERO-Spatial | CLIP-B/16 | BERT | seed 0,eval50_repB,1,500,73.4,70,76,80,72,72,54,88,78,70,74
+LIBERO-Spatial | CLIP-B/16 | own text tower | seed 0,eval50,none,500,78.4,82,86,96,74,86,52,88,82,64,74
+LIBERO-Spatial | CLIP-B/16 | own text tower | seed 0,eval50_repA,none,500,78.6,80,80,94,80,80,46,94,88,64,80
+LIBERO-Spatial | CLIP-B/16 | own text tower | seed 0,eval50_repB,1,500,80.4,82,94,92,72,94,44,88,88,74,76
+LIBERO-Long | C-RADIOv3-B | BERT | seed 1,eval50,none,500,67.4,42,62,88,92,44,88,40,90,46,82
+LIBERO-Long | C-RADIOv3-B | BERT | seed 1,eval50_repA,none,500,66.2,38,66,80,96,56,86,42,80,34,84
+LIBERO-Long | C-RADIOv3-B | BERT | seed 1,eval50_repB,1,500,64.4,38,66,88,90,46,76,46,78,38,78
+LIBERO-Long | C-RADIOv3-B | own text tower | seed 1,eval50,none,500,74.4,76,88,100,94,68,70,36,88,44,80
+LIBERO-Long | C-RADIOv3-B | own text tower | seed 1,eval50_repA,none,500,73.4,70,82,96,92,66,72,34,94,52,76
+LIBERO-Long | C-RADIOv3-B | own text tower | seed 1,eval50_repB,1,500,72.4,80,90,100,96,58,60,38,86,48,68
+LIBERO-Goal | C-RADIOv3-B | BERT | seed 0,eval50,none,500,78.8,98,94,48,64,74,84,66,98,94,68
+LIBERO-Goal | C-RADIOv3-B | BERT | seed 0,eval50_repA,none,500,80.8,96,96,60,64,84,82,60,96,94,76
+LIBERO-Goal | C-RADIOv3-B | BERT | seed 0,eval50_repB,1,500,80.0,96,92,50,76,82,84,54,94,90,82
+LIBERO-Goal | C-RADIOv3-B | own text tower | seed 0,eval50,none,500,89.4,94,90,88,82,100,94,74,100,86,86
+LIBERO-Goal | C-RADIOv3-B | own text tower | seed 0,eval50_repA,none,500,90.6,94,94,94,94,96,92,70,96,88,88
+LIBERO-Goal | C-RADIOv3-B | own text tower | seed 0,eval50_repB,1,500,88.4,94,96,96,74,100,92,58,98,90,86
+LIBERO-Object | C-RADIOv3-B | BERT | seed 0,eval50,none,500,92.8,88,94,98,100,84,96,100,78,92,98
+LIBERO-Object | C-RADIOv3-B | BERT | seed 0,eval50_repA,none,500,91.2,96,94,92,88,86,94,96,76,90,100
+LIBERO-Object | C-RADIOv3-B | BERT | seed 0,eval50_repB,1,500,92.8,96,90,100,94,86,100,94,78,94,96
+LIBERO-Object | C-RADIOv3-B | own text tower | seed 0,eval50,none,500,82.6,90,98,96,90,74,94,24,68,96,96
+LIBERO-Object | C-RADIOv3-B | own text tower | seed 0,eval50_repA,none,500,81.8,96,98,96,88,66,88,28,66,98,94
+LIBERO-Object | C-RADIOv3-B | own text tower | seed 0,eval50_repB,1,500,79.8,92,92,94,94,68,86,20,66,88,98
+LIBERO-Spatial | C-RADIOv3-B | BERT | seed 0,eval50,none,500,74.2,88,80,68,60,86,74,96,68,54,68
+LIBERO-Spatial | C-RADIOv3-B | BERT | seed 0,eval50_repA,none,500,74.8,90,84,68,62,88,64,96,74,56,66
+LIBERO-Spatial | C-RADIOv3-B | BERT | seed 0,eval50_repB,1,500,75.6,78,80,72,52,86,72,96,74,72,74
+LIBERO-Spatial | C-RADIOv3-B | own text tower | seed 0,eval50,none,500,83.8,96,98,96,96,82,64,78,86,80,62
+LIBERO-Spatial | C-RADIOv3-B | own text tower | seed 0,eval50_repA,none,500,80.6,88,96,90,80,78,66,82,92,70,64
+LIBERO-Spatial | C-RADIOv3-B | own text tower | seed 0,eval50_repB,1,500,84.2,84,96,92,92,82,68,88,90,86,64
+LIBERO-Long | ALPS | BERT | seed 0,eval50,none,500,64.2,42,66,92,88,44,78,42,72,44,74
+LIBERO-Long | ALPS | BERT | seed 0,eval50_repA,none,500,64.2,56,72,84,90,46,76,40,70,26,82
+LIBERO-Long | ALPS | BERT | seed 0,eval50_repB,1,500,62.0,54,66,96,82,52,78,28,62,32,70
+LIBERO-Long | ALPS | own text tower | seed 0,eval50,none,500,75.8,54,86,98,94,66,90,58,84,62,66
+LIBERO-Long | ALPS | own text tower | seed 0,eval50_repA,none,500,76.2,46,84,100,96,64,84,64,92,66,66
+LIBERO-Long | ALPS | own text tower | seed 0,eval50_repB,1,500,77.2,40,92,94,98,78,86,66,86,56,76
+LIBERO-Long | ALPS | BERT | seed 1,eval50,none,500,72.2,74,68,84,92,62,70,52,90,36,94
+LIBERO-Long | ALPS | BERT | seed 1,eval50_repA,none,500,67.8,68,66,76,96,56,68,38,78,54,78
+LIBERO-Long | ALPS | BERT | seed 1,eval50_repB,1,500,69.2,70,78,76,92,46,66,50,76,42,96
+LIBERO-Long | ALPS | own text tower | seed 1,eval50,none,500,79.4,88,96,88,98,80,72,50,100,48,74
+LIBERO-Long | ALPS | own text tower | seed 1,eval50_repA,none,500,78.0,92,92,88,98,72,64,54,92,50,78
+LIBERO-Long | ALPS | own text tower | seed 1,eval50_repB,1,500,78.2,82,86,84,98,76,76,48,96,56,80
+LIBERO-Long | ALPS | BERT | seed 2,eval50,none,500,75.0,72,88,92,90,50,80,60,80,60,78
+LIBERO-Long | ALPS | BERT | seed 2,eval50_repA,none,500,75.4,72,82,96,100,58,76,68,78,54,70
+LIBERO-Long | ALPS | BERT | seed 2,eval50_repB,1,500,75.4,70,78,100,92,62,90,58,88,46,70
+LIBERO-Long | ALPS | own text tower | seed 2,eval50,none,500,71.8,76,78,96,84,72,92,44,80,28,68
+LIBERO-Long | ALPS | own text tower | seed 2,eval50_repA,none,500,71.0,76,82,94,96,58,96,34,80,24,70
+LIBERO-Long | ALPS | own text tower | seed 2,eval50_repB,1,500,72.8,74,84,98,98,58,92,46,82,28,68
+LIBERO-Goal | ALPS | BERT | seed 0,eval50,none,500,85.0,98,100,78,70,80,78,78,98,90,80
+LIBERO-Goal | ALPS | BERT | seed 0,eval50_repA,none,500,83.2,92,96,70,80,60,84,80,100,92,78
+LIBERO-Goal | ALPS | BERT | seed 0,eval50_repB,1,500,87.0,94,92,80,80,72,96,76,100,94,86
+LIBERO-Goal | ALPS | own text tower | seed 0,eval50,none,500,88.8,98,94,94,52,98,88,88,100,90,86
+LIBERO-Goal | ALPS | own text tower | seed 0,eval50_repA,none,500,86.8,94,100,92,58,90,94,68,100,92,80
+LIBERO-Goal | ALPS | own text tower | seed 0,eval50_repB,1,500,86.6,96,96,94,62,94,94,74,98,82,76
+LIBERO-Goal | ALPS | BERT | seed 1,eval50,none,500,77.8,88,94,84,80,48,86,44,100,82,72
+LIBERO-Goal | ALPS | BERT | seed 1,eval50_repA,none,500,79.4,86,90,92,78,54,86,46,100,90,72
+LIBERO-Goal | ALPS | BERT | seed 1,eval50_repB,1,500,80.6,86,96,84,86,46,86,44,100,90,88
+LIBERO-Goal | ALPS | own text tower | seed 1,eval50,none,500,93.8,100,100,98,90,98,84,84,100,98,86
+LIBERO-Goal | ALPS | own text tower | seed 1,eval50_repA,none,500,90.2,90,96,96,76,98,86,82,100,94,84
+LIBERO-Goal | ALPS | own text tower | seed 1,eval50_repB,1,500,89.2,90,100,94,78,96,90,78,100,92,74
+LIBERO-Goal | ALPS | BERT | seed 2,eval50,none,500,84.2,100,94,60,76,94,72,76,100,84,86
+LIBERO-Goal | ALPS | BERT | seed 2,eval50_repA,none,500,81.4,92,90,74,68,98,64,72,100,78,78
+LIBERO-Goal | ALPS | BERT | seed 2,eval50_repB,1,500,83.2,92,90,64,78,94,64,80,100,90,80
+LIBERO-Goal | ALPS | own text tower | seed 2,eval50,none,500,84.8,90,98,98,54,98,78,54,100,96,82
+LIBERO-Goal | ALPS | own text tower | seed 2,eval50_repA,none,500,84.8,98,96,98,62,100,78,48,100,90,78
+LIBERO-Goal | ALPS | own text tower | seed 2,eval50_repB,1,500,86.8,100,94,94,66,98,82,58,100,96,80
+LIBERO-Object | ALPS | BERT | seed 0,eval50,none,500,92.4,98,90,94,94,88,94,94,80,94,98
+LIBERO-Object | ALPS | BERT | seed 0,eval50_repA,none,500,92.8,98,94,98,82,96,90,96,78,98,98
+LIBERO-Object | ALPS | BERT | seed 0,eval50_repB,1,500,91.4,94,86,98,82,96,90,98,78,98,94
+LIBERO-Object | ALPS | own text tower | seed 0,eval50,none,500,95.2,100,96,96,98,88,90,94,90,100,100
+LIBERO-Object | ALPS | own text tower | seed 0,eval50_repA,none,500,93.8,98,94,98,100,80,92,100,84,98,94
+LIBERO-Object | ALPS | own text tower | seed 0,eval50_repB,1,500,92.0,94,92,96,94,86,94,88,78,100,98
+LIBERO-Object | ALPS | BERT | seed 1,eval50,none,500,94.4,90,94,96,100,96,98,98,80,96,96
+LIBERO-Object | ALPS | BERT | seed 1,eval50_repA,none,500,91.4,94,86,88,92,98,92,96,82,94,92
+LIBERO-Object | ALPS | BERT | seed 1,eval50_repB,1,500,93.6,90,94,94,96,92,100,98,78,98,96
+LIBERO-Object | ALPS | own text tower | seed 1,eval50,none,500,94.4,98,92,100,96,92,92,100,84,94,96
+LIBERO-Object | ALPS | own text tower | seed 1,eval50_repA,none,500,95.8,92,100,100,88,96,94,98,92,98,100
+LIBERO-Object | ALPS | own text tower | seed 1,eval50_repB,1,500,94.2,98,98,98,92,90,86,98,94,92,96
+LIBERO-Object | ALPS | BERT | seed 2,eval50,none,500,95.4,100,90,98,98,96,98,98,86,98,92
+LIBERO-Object | ALPS | BERT | seed 2,eval50_repA,none,500,91.8,100,84,96,98,100,86,98,74,100,82
+LIBERO-Object | ALPS | BERT | seed 2,eval50_repB,1,500,94.0,98,92,98,98,94,86,94,82,100,98
+LIBERO-Object | ALPS | own text tower | seed 2,eval50,none,500,91.6,88,98,84,98,96,94,88,84,96,90
+LIBERO-Object | ALPS | own text tower | seed 2,eval50_repA,none,500,94.8,96,98,84,98,94,96,98,92,96,96
+LIBERO-Object | ALPS | own text tower | seed 2,eval50_repB,1,500,93.8,94,98,88,96,94,98,96,86,94,94
+LIBERO-Spatial | ALPS | BERT | seed 0,eval50,none,500,86.6,94,74,94,96,90,78,98,68,88,86
+LIBERO-Spatial | ALPS | BERT | seed 0,eval50_repA,none,500,86.8,86,90,98,88,92,78,96,76,82,82
+LIBERO-Spatial | ALPS | BERT | seed 0,eval50_repB,1,500,86.0,98,74,90,98,84,82,100,76,72,86
+LIBERO-Spatial | ALPS | own text tower | seed 0,eval50,none,500,79.8,90,68,98,74,86,50,90,88,76,78
+LIBERO-Spatial | ALPS | own text tower | seed 0,eval50_repA,none,500,83.8,100,66,98,82,98,50,94,92,80,78
+LIBERO-Spatial | ALPS | own text tower | seed 0,eval50_repB,1,500,84.2,90,74,100,76,88,66,98,94,80,76
+LIBERO-Spatial | ALPS | BERT | seed 1,eval50,none,500,80.6,92,76,88,92,74,76,96,64,76,72
+LIBERO-Spatial | ALPS | BERT | seed 1,eval50_repA,none,500,81.4,96,68,94,94,74,88,88,72,78,62
+LIBERO-Spatial | ALPS | BERT | seed 1,eval50_repB,1,500,82.4,92,86,94,96,70,74,96,76,74,66
+LIBERO-Spatial | ALPS | own text tower | seed 1,eval50,none,500,84.4,88,72,98,94,88,76,96,78,82,72
+LIBERO-Spatial | ALPS | own text tower | seed 1,eval50_repA,none,500,83.8,84,76,100,92,94,80,94,74,82,62
+LIBERO-Spatial | ALPS | own text tower | seed 1,eval50_repB,1,500,84.2,94,78,94,88,96,68,94,68,82,80
+LIBERO-Spatial | ALPS | BERT | seed 2,eval50,none,500,81.6,94,90,98,88,70,42,94,76,88,76
+LIBERO-Spatial | ALPS | BERT | seed 2,eval50_repA,none,500,82.8,86,94,94,90,78,50,92,78,90,76
+LIBERO-Spatial | ALPS | BERT | seed 2,eval50_repB,1,500,82.8,90,90,92,96,80,58,92,70,88,72
+LIBERO-Spatial | ALPS | own text tower | seed 2,eval50,none,500,82.0,90,86,98,96,78,68,88,82,68,66
+LIBERO-Spatial | ALPS | own text tower | seed 2,eval50_repA,none,500,82.6,88,88,98,88,78,58,94,92,58,84
+LIBERO-Spatial | ALPS | own text tower | seed 2,eval50_repB,1,500,83.8,84,88,100,94,74,80,92,94,68,64
+LIBERO-Long | DINOv2-B/14 | BERT | seed 1,eval50,none,500,68.2,66,76,84,96,52,68,48,78,36,78
+LIBERO-Long | DINOv2-B/14 | BERT | seed 1,eval50_repA,none,500,65.2,50,68,86,96,52,60,54,84,16,86
+LIBERO-Long | DINOv2-B/14 | BERT | seed 1,eval50_repB,1,500,66.0,62,68,84,90,40,76,54,74,34,78
+LIBERO-Goal | DINOv2-B/14 | BERT | seed 0,eval50,none,500,78.4,88,92,56,60,88,66,70,100,80,84
+LIBERO-Goal | DINOv2-B/14 | BERT | seed 0,eval50_repA,none,500,79.6,98,90,68,58,72,78,68,100,84,80
+LIBERO-Goal | DINOv2-B/14 | BERT | seed 0,eval50_repB,1,500,77.8,90,92,64,72,84,64,64,100,74,74
+LIBERO-Object | DINOv2-B/14 | BERT | seed 0,eval50,none,500,88.8,96,72,96,96,86,90,90,80,98,84
+LIBERO-Object | DINOv2-B/14 | BERT | seed 0,eval50_repA,none,500,86.8,92,64,88,98,84,86,84,88,100,84
+LIBERO-Object | DINOv2-B/14 | BERT | seed 0,eval50_repB,1,500,88.6,98,72,98,98,90,82,94,80,98,76
+LIBERO-Spatial | DINOv2-B/14 | BERT | seed 0,eval50,none,500,79.4,90,68,86,92,58,74,94,82,74,76
+LIBERO-Spatial | DINOv2-B/14 | BERT | seed 0,eval50_repA,none,500,82.6,86,86,96,90,62,74,98,70,78,86
+LIBERO-Spatial | DINOv2-B/14 | BERT | seed 0,eval50_repB,1,500,79.6,86,74,94,80,66,72,96,82,74,72
+LIBERO-Long | DINOv3-B/16 | BERT | seed 1,eval50,none,500,68.8,76,86,74,84,56,74,38,78,44,78
+LIBERO-Long | DINOv3-B/16 | BERT | seed 1,eval50_repA,none,500,67.2,62,86,84,92,44,76,38,78,48,64
+LIBERO-Long | DINOv3-B/16 | BERT | seed 1,eval50_repB,1,500,69.2,56,86,86,84,52,74,44,90,50,70
+LIBERO-Goal | DINOv3-B/16 | BERT | seed 0,eval50,none,500,73.2,82,76,62,60,62,70,62,100,84,74
+LIBERO-Goal | DINOv3-B/16 | BERT | seed 0,eval50_repA,none,500,72.2,88,82,58,54,62,70,48,100,88,72
+LIBERO-Goal | DINOv3-B/16 | BERT | seed 0,eval50_repB,1,500,72.6,84,80,58,70,60,78,42,100,94,60
+LIBERO-Object | DINOv3-B/16 | BERT | seed 0,eval50,none,500,94.2,92,90,100,92,98,92,88,96,100,94
+LIBERO-Object | DINOv3-B/16 | BERT | seed 0,eval50_repA,none,500,94.0,92,96,100,96,100,86,90,86,98,96
+LIBERO-Object | DINOv3-B/16 | BERT | seed 0,eval50_repB,1,500,95.0,88,94,100,96,94,88,96,96,100,98
+LIBERO-Spatial | DINOv3-B/16 | BERT | seed 0,eval50,none,500,79.2,88,70,96,90,76,56,90,72,90,64
+LIBERO-Spatial | DINOv3-B/16 | BERT | seed 0,eval50_repA,none,500,82.2,92,84,94,90,80,52,92,66,86,86
+LIBERO-Spatial | DINOv3-B/16 | BERT | seed 0,eval50_repB,1,500,80.6,80,88,94,88,86,48,92,70,74,86
+LIBERO-Long | SigLIP 2-B/16 | BERT | seed 1,eval50,none,500,74.0,82,88,100,96,48,94,26,88,26,92
+LIBERO-Long | SigLIP 2-B/16 | BERT | seed 1,eval50_repA,none,500,71.8,58,90,98,98,56,90,32,82,34,80
+LIBERO-Long | SigLIP 2-B/16 | BERT | seed 1,eval50_repB,1,500,71.2,72,94,94,100,46,90,28,84,30,74
+LIBERO-Long | SigLIP 2-B/16 | own text tower | seed 1,eval50,none,500,74.6,78,84,92,98,36,76,60,76,60,86
+LIBERO-Long | SigLIP 2-B/16 | own text tower | seed 1,eval50_repA,none,500,74.2,68,90,94,96,56,72,58,68,62,78
+LIBERO-Long | SigLIP 2-B/16 | own text tower | seed 1,eval50_repB,1,500,71.0,68,88,98,100,46,72,48,78,40,72
+LIBERO-Goal | SigLIP 2-B/16 | BERT | seed 0,eval50,none,500,77.2,96,90,82,74,36,94,58,96,64,82
+LIBERO-Goal | SigLIP 2-B/16 | BERT | seed 0,eval50_repA,none,500,78.6,96,88,90,66,58,92,60,98,70,68
+LIBERO-Goal | SigLIP 2-B/16 | BERT | seed 0,eval50_repB,1,500,80.6,96,94,78,72,46,82,68,100,88,82
+LIBERO-Goal | SigLIP 2-B/16 | own text tower | seed 0,eval50,none,500,90.8,92,98,92,68,98,92,92,100,92,84
+LIBERO-Goal | SigLIP 2-B/16 | own text tower | seed 0,eval50_repA,none,500,89.4,98,100,96,70,98,94,82,100,88,68
+LIBERO-Goal | SigLIP 2-B/16 | own text tower | seed 0,eval50_repB,1,500,90.4,94,96,94,68,96,98,90,100,96,72
+LIBERO-Object | SigLIP 2-B/16 | BERT | seed 0,eval50,none,500,90.2,70,96,100,100,82,98,92,82,94,88
+LIBERO-Object | SigLIP 2-B/16 | BERT | seed 0,eval50_repA,none,500,90.4,62,98,98,96,82,94,94,90,94,96
+LIBERO-Object | SigLIP 2-B/16 | BERT | seed 0,eval50_repB,1,500,90.2,70,92,98,100,86,96,94,84,90,92
+LIBERO-Object | SigLIP 2-B/16 | own text tower | seed 0,eval50,none,500,89.0,96,92,100,88,80,94,76,80,88,96
+LIBERO-Object | SigLIP 2-B/16 | own text tower | seed 0,eval50_repA,none,500,93.8,96,98,100,94,92,100,82,86,90,100
+LIBERO-Object | SigLIP 2-B/16 | own text tower | seed 0,eval50_repB,1,500,92.2,98,94,100,84,98,96,74,88,94,96
+LIBERO-Spatial | SigLIP 2-B/16 | BERT | seed 0,eval50,none,500,85.4,94,82,98,98,82,50,100,92,88,70
+LIBERO-Spatial | SigLIP 2-B/16 | BERT | seed 0,eval50_repA,none,500,84.0,90,90,96,96,82,52,96,90,84,64
+LIBERO-Spatial | SigLIP 2-B/16 | BERT | seed 0,eval50_repB,1,500,83.0,78,86,94,100,76,62,98,90,84,62
+LIBERO-Spatial | SigLIP 2-B/16 | own text tower | seed 0,eval50,none,500,82.2,84,88,94,94,72,80,98,88,58,66
+LIBERO-Spatial | SigLIP 2-B/16 | own text tower | seed 0,eval50_repA,none,500,84.4,90,90,86,92,84,72,98,90,74,68
+LIBERO-Spatial | SigLIP 2-B/16 | own text tower | seed 0,eval50_repB,1,500,85.8,92,94,100,90,72,74,98,96,72,70
+LIBERO-Long | SigLIP 2-B/16 + Stage 2 | BERT | seed 1,eval50,none,500,73.0,82,92,82,94,60,70,48,92,40,70
+LIBERO-Long | SigLIP 2-B/16 + Stage 2 | BERT | seed 1,eval50_repA,none,500,76.4,84,98,92,94,60,72,46,92,52,74
+LIBERO-Long | SigLIP 2-B/16 + Stage 2 | BERT | seed 1,eval50_repB,1,500,73.8,80,88,86,100,84,72,30,92,40,66
+LIBERO-Goal | SigLIP 2-B/16 + Stage 2 | BERT | seed 0,eval50,none,500,78.8,96,84,90,56,68,82,50,98,84,80
+LIBERO-Goal | SigLIP 2-B/16 + Stage 2 | BERT | seed 0,eval50_repA,none,500,81.4,90,82,88,66,76,84,60,96,92,80
+LIBERO-Goal | SigLIP 2-B/16 + Stage 2 | BERT | seed 0,eval50_repB,1,500,76.8,92,70,88,56,64,90,42,98,90,78
+LIBERO-Spatial | SigLIP 2-B/16 + Stage 2 | BERT | seed 0,eval50,none,500,80.8,90,82,84,74,80,74,96,90,88,50
+LIBERO-Spatial | SigLIP 2-B/16 + Stage 2 | BERT | seed 0,eval50_repA,none,500,82.0,80,82,82,78,84,90,94,88,90,52
+LIBERO-Spatial | SigLIP 2-B/16 + Stage 2 | BERT | seed 0,eval50_repB,1,500,84.4,80,86,88,80,90,84,98,92,80,66

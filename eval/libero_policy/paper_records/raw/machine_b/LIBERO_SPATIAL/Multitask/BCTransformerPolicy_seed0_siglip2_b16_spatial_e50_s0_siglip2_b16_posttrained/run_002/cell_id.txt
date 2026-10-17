@@ -1,0 +1,1 @@
+siglip2_b16_spatial_e50_s0_siglip2_b16_posttrained

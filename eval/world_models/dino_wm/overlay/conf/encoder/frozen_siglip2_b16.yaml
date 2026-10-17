@@ -1,0 +1,7 @@
+# SigLIP 2-B/16 (timm vit_base_patch16_siglip_224.v2_webli, forward_features)
+# Frozen encoder of the world-model experiments (models/encoder/frozen_encoder.py). stats: npz of fit_stats.py for the task.
+_target_: models.encoder.frozen_encoder.FrozenTokenEncoder
+encoder: siglip2_b16
+res: 224
+stats: ???
+tf32: true    # TF32 inside the frozen encoder forward only

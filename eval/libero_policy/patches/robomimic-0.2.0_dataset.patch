@@ -1,0 +1,20 @@
+SequenceDataset.__getstate__ for robomimic 0.2.0 (as installed in the environment of the ALPS policy runs): drop the open
+hdf5 handle when the dataset is pickled; robomimic reopens it lazily. Inert with the fork-context DataLoader of
+libero_8f1084e3.patch (forked workers do not pickle the dataset); needed only if the workers are started with spawn.
+Apply from site-packages:  patch -p1 -d "$(python -c 'import os, robomimic; print(os.path.dirname(os.path.dirname(robomimic.__file__)))')" < robomimic-0.2.0_dataset.patch
+
+--- a/robomimic/utils/dataset.py
++++ b/robomimic/utils/dataset.py
+@@ -205,6 +205,12 @@
+             for _ in range(num_sequences):
+                 self._index_to_demo_id[self.total_num_sequences] = ep
+                 self.total_num_sequences += 1
++
++
++    def __getstate__(self):
++        state = self.__dict__.copy()
++        state["_hdf5_file"] = None
++        return state
+ 
+     @property
+     def hdf5_file(self):

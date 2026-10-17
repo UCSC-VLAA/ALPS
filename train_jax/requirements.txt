@@ -1,0 +1,14 @@
+# The ALPS runs used jax/jaxlib 0.9.0, flax 0.12.6, optax 0.2.8, orbax-checkpoint 0.12.1, tensorflow 2.20.0 (TPU v5p / v6e).
+jax>=0.4.35
+flax>=0.10.0
+optax>=0.2.3
+orbax-checkpoint>=0.8.0
+etils
+ml_collections
+absl-py
+numpy
+tensorflow-cpu>=2.15      # input pipelines only
+tensorflow-text           # the original caption tokenizer; without it a pure-Python tokenizer is used
+tensorflow-datasets       # only for TFDS inputs
+safetensors               # only for tools/compute_t5_empty_token.py
+huggingface_hub           # only for tools/compute_t5_empty_token.py (fetches google/flan-t5-base)

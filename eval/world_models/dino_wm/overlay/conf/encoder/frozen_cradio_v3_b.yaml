@@ -1,0 +1,7 @@
+# C-RADIOv3-B (NVlabs RADIO hubconf, backbone spatial features, no adaptor; env RADIO_REPO, RADIO_CKPT)
+# Frozen encoder of the world-model experiments (models/encoder/frozen_encoder.py). stats: npz of fit_stats.py for the task.
+_target_: models.encoder.frozen_encoder.FrozenTokenEncoder
+encoder: cradio_v3_b
+res: 224
+stats: ???
+tf32: true    # TF32 inside the frozen encoder forward only

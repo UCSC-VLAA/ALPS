@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+runs/
+*.safetensors
+*.pt
+*.pth
+*.npz
+*.npy
+!train_jax/assets/*.npz
+!eval/libero_policy/paper_records/raw/task_embeddings/*.npz

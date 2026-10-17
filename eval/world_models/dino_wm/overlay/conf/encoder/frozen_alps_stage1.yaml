@@ -1,0 +1,8 @@
+# ALPS (Stage 1), raw tokens of the last block
+# Frozen encoder of the world-model experiments (models/encoder/frozen_encoder.py). stats: npz of fit_stats.py for the task.
+_target_: models.encoder.frozen_encoder.FrozenTokenEncoder
+encoder: alps_stage1
+res: 224
+stats: ???
+tf32: true    # TF32 inside the frozen encoder forward only
+weights: null  # safetensors of ALPS (Stage 1); null = env ALPS_STAGE1_WEIGHTS

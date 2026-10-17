@@ -1,0 +1,50 @@
+diff --git a/eval.py b/eval.py
+index 6734d5f..605764c 100644
+--- a/eval.py
++++ b/eval.py
+@@ -55,6 +55,13 @@ def run(cfg: DictConfig):
+ 
+     # create world environment
+     cfg.world.max_episode_steps = 2 * cfg.eval.eval_budget
++    # ALPS eval: optional episode sharding, +eval.shard="i/n" evaluates the i-th of n contiguous slices of the same episode list
++    shard = cfg.eval.get("shard", None)
++    if shard:
++        si, sn = (int(x) for x in str(shard).split("/"))
++        shard_sizes = [len(x) for x in np.array_split(np.arange(cfg.eval.num_eval), sn)]
++        cfg.world.num_envs = shard_sizes[si]
++        print(f"[shard] {si}/{sn}: {cfg.world.num_envs} of {cfg.eval.num_eval} episodes")
+     world = swm.World(**cfg.world, image_shape=(224, 224))
+ 
+     # create the transform
+@@ -128,16 +135,20 @@ def run(cfg: DictConfig):
+     # sort increasingly to avoid issues with HDF5Dataset indexing
+     random_episode_indices = np.sort(valid_indices[random_episode_indices])
+ 
++    if shard:
++        random_episode_indices = np.array_split(random_episode_indices, sn)[si]
+     print(random_episode_indices)
+ 
+     eval_episodes = dataset.get_row_data(random_episode_indices)[col_name]
+     eval_start_idx = dataset.get_row_data(random_episode_indices)["step_idx"]
+ 
+-    if len(eval_episodes) < cfg.eval.num_eval:
++    if len(eval_episodes) < (cfg.world.num_envs if shard else cfg.eval.num_eval):
+         raise ValueError("Not enough episodes with sufficient length for evaluation.")
+ 
+     world.set_policy(policy)
+ 
++    if shard:
++        results_path = results_path / f"shard_{si}_{sn}"
+     results_path.mkdir(parents=True, exist_ok=True)
+ 
+     start_time = time.time()
+@@ -153,6 +164,9 @@ def run(cfg: DictConfig):
+     end_time = time.time()
+     
+     print(metrics)
++    # ALPS eval: per-episode outcomes of this run (or shard)
++    np.savez(results_path / "episode_results.npz", rows=random_episode_indices, episodes=np.asarray(eval_episodes), starts=np.asarray(eval_start_idx),
++             successes=np.asarray(metrics["episode_successes"]), shard=str(shard))
+ 
+     results_path = results_path / cfg.output.filename
+     results_path.parent.mkdir(parents=True, exist_ok=True)

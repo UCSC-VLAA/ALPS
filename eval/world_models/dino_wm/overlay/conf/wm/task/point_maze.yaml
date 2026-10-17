@@ -1,0 +1,21 @@
+# PointMaze: history 3 frames, frame skip 5; data folder point_maze of the DINO-WM release (seed-42 random 0.9 split).
+task: point_maze
+data_subdir: point_maze
+num_hist: 3
+frameskip: 5
+env:
+  name: point_maze
+  args: []
+  kwargs: {}
+  dataset:
+    _target_: datasets.point_maze_dset.load_point_maze_slice_train_val
+    n_rollout: null
+    normalize_action: true
+    data_path: ???
+    split_ratio: 0.9
+    transform:
+      _target_: datasets.img_transforms.default_transform
+      img_size: 224
+    traj_subset: ???
+  decoder_path: null
+  num_workers: 16

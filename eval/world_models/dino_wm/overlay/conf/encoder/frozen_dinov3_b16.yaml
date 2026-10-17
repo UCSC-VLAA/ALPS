@@ -1,0 +1,7 @@
+# DINOv3-B/16 (timm vit_base_patch16_dinov3.lvd1689m, forward_features, prefix tokens dropped)
+# Frozen encoder of the world-model experiments (models/encoder/frozen_encoder.py). stats: npz of fit_stats.py for the task.
+_target_: models.encoder.frozen_encoder.FrozenTokenEncoder
+encoder: dinov3_b16
+res: 224
+stats: ???
+tf32: true    # TF32 inside the frozen encoder forward only

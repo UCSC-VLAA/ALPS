@@ -1,0 +1,522 @@
+diff --git a/datasets/deformable_env_dset.py b/datasets/deformable_env_dset.py
+index bb8b10b..95513e4 100644
+--- a/datasets/deformable_env_dset.py
++++ b/datasets/deformable_env_dset.py
+@@ -131,6 +131,7 @@ def load_deformable_dset_slice_train_val(
+     num_hist=0,
+     num_pred=0,
+     frameskip=0,
++    traj_subset=None,  # ALPS eval: train-split trajectory subset (make_subsets.py); None = official
+ ):
+     dset = DeformDataset(
+         n_rollout=n_rollout,
+@@ -144,6 +145,7 @@ def load_deformable_dset_slice_train_val(
+         train_fraction=split_ratio,
+         num_frames=num_hist + num_pred,
+         frameskip=frameskip,
++        traj_subset=traj_subset,
+     )
+ 
+     datasets = {}
+diff --git a/datasets/point_maze_dset.py b/datasets/point_maze_dset.py
+index f17cbc3..3bc4ba0 100644
+--- a/datasets/point_maze_dset.py
++++ b/datasets/point_maze_dset.py
+@@ -118,6 +118,7 @@ def load_point_maze_slice_train_val(
+     num_hist=0,
+     num_pred=0,
+     frameskip=0,
++    traj_subset=None,  # ALPS eval: train-split trajectory subset (make_subsets.py); None = official
+ ):
+     dset = PointMazeDataset(
+         n_rollout=n_rollout,
+@@ -129,7 +130,8 @@ def load_point_maze_slice_train_val(
+         traj_dataset=dset, 
+         train_fraction=split_ratio, 
+         num_frames=num_hist + num_pred, 
+-        frameskip=frameskip
++        frameskip=frameskip,
++        traj_subset=traj_subset,
+     )
+ 
+     datasets = {}
+diff --git a/datasets/pusht_dset.py b/datasets/pusht_dset.py
+index 050f5ee..4f6473b 100644
+--- a/datasets/pusht_dset.py
++++ b/datasets/pusht_dset.py
+@@ -6,7 +6,7 @@ from pathlib import Path
+ from einops import rearrange
+ from decord import VideoReader
+ from typing import Callable, Optional
+-from .traj_dset import TrajDataset, TrajSlicerDataset
++from .traj_dset import TrajDataset, TrajSlicerDataset, apply_traj_subset
+ from typing import Optional, Callable, Any
+ decord.bridge.set_bridge("torch")
+ 
+@@ -144,6 +144,7 @@ def load_pusht_slice_train_val(
+     num_pred=0,
+     frameskip=0,
+     with_velocity=True,
++    traj_subset=None,  # ALPS eval: train-split trajectory subset (make_subsets.py); None = official
+ ):
+     train_dset = PushTDataset(
+         n_rollout=n_rollout,
+@@ -152,6 +153,7 @@ def load_pusht_slice_train_val(
+         normalize_action=normalize_action,
+         with_velocity=with_velocity,
+     )
++    train_dset = apply_traj_subset(train_dset, traj_subset)
+     val_dset = PushTDataset(
+         n_rollout=n_rollout,
+         transform=transform,
+diff --git a/datasets/traj_dset.py b/datasets/traj_dset.py
+index d5c0de6..963b2a8 100644
+--- a/datasets/traj_dset.py
++++ b/datasets/traj_dset.py
+@@ -45,6 +45,8 @@ class TrajSubset(TrajDataset, Subset):
+         return self.dataset.get_seq_length(self.indices[idx])
+ 
+     def __getattr__(self, name):
++        if name == "dataset" or name.startswith("__"):  # ALPS eval: no infinite recursion while unpickling
++            raise AttributeError(name)
+         if hasattr(self.dataset, name):
+             return getattr(self.dataset, name)
+         raise AttributeError(f"'{type(self).__name__}' object has no attribute '{name}'")
+@@ -89,8 +91,20 @@ class TrajSlicerDataset(TrajDataset):
+     def __len__(self):
+         return len(self.slices)
+ 
++    # ALPS eval: decode only the frames of the slice. The official path decodes the whole trajectory
++    # (self.dataset[i] = get_frames(i, range(T)); for PushT a ~125-frame video) and keeps num_frames of them; the fast
++    # path requests the same frames directly and returns identical tensors. DINO_WM_FAST_SLICE=0 restores the official path.
+     def __getitem__(self, idx):
+         i, start, end = self.slices[idx]
++        i, start, end = int(i), int(start), int(end)
++        if _FAST_SLICE:
++            base, bi = _base_and_index(self.dataset, i)
++            if hasattr(base, "get_frames") and hasattr(base, "actions"):
++                frames = list(range(start, end, self.frameskip))
++                obs, _, state, _ = base.get_frames(bi, frames)
++                act = base.actions[bi, start:end]
++                act = rearrange(act, "(n f) d -> n (f d)", n=self.num_frames)  # concat actions
++                return tuple([obs, act, state])
+         obs, act, state, _ = self.dataset[i]
+         for k, v in obs.items():
+             obs[k] = v[start:end:self.frameskip]
+@@ -100,6 +114,30 @@ class TrajSlicerDataset(TrajDataset):
+         return tuple([obs, act, state])
+ 
+ 
++import os as _os
++_FAST_SLICE = _os.environ.get("DINO_WM_FAST_SLICE", "1") == "1"
++
++
++def _base_and_index(ds, i):
++    while isinstance(ds, TrajSubset):
++        i = ds.indices[i]
++        ds = ds.dataset
++    return ds, i
++
++
++def apply_traj_subset(train_dataset, traj_subset):
++    """ALPS eval: restrict a TRAIN trajectory dataset to the whole trajectories listed in a json file, in that order
++    (make_subsets.py: {"indices": [positions in the official train split]}). None -> unchanged (official)."""
++    if traj_subset is None:
++        return train_dataset
++    import json
++    with open(traj_subset) as f:
++        idx = json.load(f)["indices"]
++    assert len(idx) > 0 and max(idx) < len(train_dataset), (max(idx), len(train_dataset))
++    print(f"traj_subset {traj_subset}: {len(idx)} of {len(train_dataset)} train trajectories")
++    return TrajSubset(train_dataset, idx)
++
++
+ def random_split_traj(
+     dataset: TrajDataset,
+     lengths: Sequence[int],
+@@ -141,12 +179,14 @@ def get_train_val_sliced(
+     random_seed: int = 42,
+     num_frames: int = 10,
+     frameskip: int = 1,
++    traj_subset=None,  # ALPS eval: see apply_traj_subset
+ ):
+     train, val = split_traj_datasets(
+         traj_dataset,
+         train_fraction=train_fraction,
+         random_seed=random_seed,
+     )
++    train = apply_traj_subset(train, traj_subset)
+     train_slices = TrajSlicerDataset(train, num_frames, frameskip)
+     val_slices = TrajSlicerDataset(val, num_frames, frameskip)
+     return train, val, train_slices, val_slices
+\ No newline at end of file
+diff --git a/datasets/wall_dset.py b/datasets/wall_dset.py
+index 20784d6..ae27e31 100644
+--- a/datasets/wall_dset.py
++++ b/datasets/wall_dset.py
+@@ -3,7 +3,7 @@ import decord
+ import numpy as np
+ from pathlib import Path
+ from typing import Callable, Optional
+-from .traj_dset import TrajDataset, get_train_val_sliced, TrajSlicerDataset
++from .traj_dset import TrajDataset, get_train_val_sliced, TrajSlicerDataset, apply_traj_subset
+ decord.bridge.set_bridge("torch")
+ 
+ # precomputed dataset stats
+@@ -115,6 +115,7 @@ def load_wall_slice_train_val(
+     num_hist=0,
+     num_pred=0,
+     frameskip=0,
++    traj_subset=None,  # ALPS eval: train-split trajectory subset (make_subsets.py); None = official
+ ):  
+     if split_mode == "random":
+         dset = WallDataset(
+@@ -126,8 +127,9 @@ def load_wall_slice_train_val(
+         dset_train, dset_val, train_slices, val_slices = get_train_val_sliced(
+             traj_dataset=dset, 
+             train_fraction=split_ratio, 
+-            num_frames=num_hist + num_pred, 
+-            frameskip=frameskip
++            num_frames=num_hist + num_pred,
++            frameskip=frameskip,
++            traj_subset=traj_subset,
+         )
+     elif split_mode == "folder":
+         dset_train = WallDataset(
+@@ -136,6 +138,7 @@ def load_wall_slice_train_val(
+             data_path=data_path + "/train",
+             normalize_action=normalize_action,
+         )
++        dset_train = apply_traj_subset(dset_train, traj_subset)
+         dset_val = WallDataset(
+             n_rollout=n_rollout,
+             transform=transform,
+diff --git a/env/__init__.py b/env/__init__.py
+index 91d1d27..d4cd55d 100644
+--- a/env/__init__.py
++++ b/env/__init__.py
+@@ -1,24 +1,33 @@
+ from gym.envs.registration import register
+-from .pointmaze import U_MAZE
++# ALPS eval: guarded import. env.pointmaze imports gym.envs.mujoco / d4rl -> mujoco_py, which needs the GL / GLEW / EGL
++# development headers; without them a failing import broke `import env` (hence plan.py) for every task. PointMaze is
++# registered only when its import succeeds; the other registrations are unchanged.
++try:
++    from .pointmaze import U_MAZE
++    _HAS_POINTMAZE = True
++except Exception as _e:  # mujoco_py raises a plain Exception (LD_LIBRARY_PATH check) before compiling
++    _HAS_POINTMAZE = False
++    _POINTMAZE_IMPORT_ERROR = _e
+ register(
+     id="pusht",
+     entry_point="env.pusht.pusht_wrapper:PushTWrapper",
+     max_episode_steps=300,
+     reward_threshold=1.0,
+ )
+-register(
+-    id='point_maze',
+-    entry_point='env.pointmaze:PointMazeWrapper',
+-    max_episode_steps=300,
+-    kwargs={
+-        'maze_spec':U_MAZE,
+-        'reward_type':'sparse',
+-        'reset_target': False,
+-        'ref_min_score': 23.85,
+-        'ref_max_score': 161.86,
+-        'dataset_url':'http://rail.eecs.berkeley.edu/datasets/offline_rl/maze2d/maze2d-umaze-sparse-v1.hdf5'
+-    }
+-)
++if _HAS_POINTMAZE:
++    register(
++        id='point_maze',
++        entry_point='env.pointmaze:PointMazeWrapper',
++        max_episode_steps=300,
++        kwargs={
++            'maze_spec':U_MAZE,
++            'reward_type':'sparse',
++            'reset_target': False,
++            'ref_min_score': 23.85,
++            'ref_max_score': 161.86,
++            'dataset_url':'http://rail.eecs.berkeley.edu/datasets/offline_rl/maze2d/maze2d-umaze-sparse-v1.hdf5'
++        }
++    )
+ register(
+     id="wall",
+     entry_point="env.wall.wall_env_wrapper:WallEnvWrapper",
+@@ -31,4 +40,4 @@ register(
+     entry_point="env.deformable_env.FlexEnvWrapper:FlexEnvWrapper",
+     max_episode_steps=300,
+     reward_threshold=1.0,
+-)
+\ No newline at end of file
++)
+diff --git a/plan.py b/plan.py
+index b4e7713..b8ae6a3 100644
+--- a/plan.py
++++ b/plan.py
+@@ -129,9 +129,13 @@ class PlanWorkspace:
+         self.device = next(wm.parameters()).device
+ 
+         # have different seeds for each planning instances
+-        self.eval_seed = [cfg_dict["seed"] * n + 1 for n in range(cfg_dict["n_evals"])]
+-        print("eval_seed: ", self.eval_seed)
+-        self.n_evals = cfg_dict["n_evals"]
++        # ALPS eval: optional shard [eval_start, eval_end) of the n_evals planning instances (+eval_start=A +eval_end=B on
++        # the command line). The shard keeps the global per-instance seeds and the global goal set.
++        n_total = int(cfg_dict["n_evals"]); self.eval_start = int(cfg_dict.get("eval_start", 0)); self.eval_end = int(cfg_dict.get("eval_end", n_total))
++        self.n_evals_total = n_total
++        self.eval_seed = [cfg_dict["seed"] * n + 1 for n in range(n_total)][self.eval_start:self.eval_end]
++        print("eval_seed: ", self.eval_seed, f"(shard [{self.eval_start}:{self.eval_end}) of {n_total})")
++        self.n_evals = self.eval_end - self.eval_start
+         self.goal_source = cfg_dict["goal_source"]
+         self.goal_H = cfg_dict["goal_H"]
+         self.action_dim = self.dset.action_dim * self.frameskip
+@@ -276,7 +280,7 @@ class PlanWorkspace:
+             raise ValueError("No trajectory in the dataset is long enough.")
+ 
+         # sample init_states from dset
+-        for i in range(self.n_evals):
++        for i in range(getattr(self, "n_evals_total", self.n_evals)):   # ALPS eval: draw all goals, so a shard sees the global goal set
+             max_offset = -1
+             while max_offset < 0:  # filter out traj that are not long enough
+                 traj_id = random.randint(0, len(self.dset) - 1)
+@@ -294,7 +298,8 @@ class PlanWorkspace:
+             states.append(state)
+             observations.append(obs)
+             env_info.append(e_info)
+-        return observations, states, actions, env_info
++        a, b = getattr(self, "eval_start", 0), getattr(self, "eval_end", len(observations))
++        return observations[a:b], states[a:b], actions[a:b], env_info[a:b]
+ 
+     def prepare_targets_from_file(self, file_path):
+         with open(file_path, "rb") as f:
+@@ -430,6 +435,12 @@ class DummyWandbRun:
+ def planning_main(cfg_dict):
+     output_dir = cfg_dict["saved_folder"]
+     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
++    # ALPS eval: optional TF32 for the planner's world-model rollouts (`+tf32=true` on the command line; absent or false =
++    # the official fp32). On the released PushT model the top-30 CEM set was identical on 5 of 5 instances, 1.56x faster.
++    if cfg_dict.get("tf32", False):
++        torch.backends.cuda.matmul.allow_tf32 = True
++        torch.backends.cudnn.allow_tf32 = True
++        print("[plan] TF32 enabled for the world-model rollouts (cfg tf32=true)")
+     if cfg_dict["wandb_logging"]:
+         wandb_run = wandb.init(
+             project=f"plan_{cfg_dict['planner']['name']}", config=cfg_dict
+@@ -479,6 +490,24 @@ def planning_main(cfg_dict):
+             ]
+         )
+ 
++    # ALPS eval, shards: the full-size env above reproduces the RNG state of an unsharded run (identical goal set); the
++    # shard-sized env is built with the RNG states restored around the rebuild, and only the shard's instances are planned.
++    _n_total = int(cfg_dict["n_evals"]); _a = int(cfg_dict.get("eval_start", 0)); _b = int(cfg_dict.get("eval_end", _n_total))
++    if _b - _a != _n_total:
++        import random as _random
++        try:
++            env.close()
++        except Exception as _e:
++            print("shard: env.close() ->", _e)
++        _rs, _ns, _ts = _random.getstate(), np.random.get_state(), torch.get_rng_state()
++        if model_cfg.env.name == "wall" or model_cfg.env.name == "deformable_env":
++            from env.serial_vector_env import SerialVectorEnv
++            env = SerialVectorEnv([gym.make(model_cfg.env.name, *model_cfg.env.args, **model_cfg.env.kwargs) for _ in range(_b - _a)])
++        else:
++            env = SubprocVectorEnv([lambda: gym.make(model_cfg.env.name, *model_cfg.env.args, **model_cfg.env.kwargs) for _ in range(_b - _a)])
++        _random.setstate(_rs); np.random.set_state(_ns); torch.set_rng_state(_ts)
++        print(f"shard: rebuilt env with {_b - _a} instances for evals [{_a}:{_b}) of {_n_total}; RNG states restored")
++
+     plan_workspace = PlanWorkspace(
+         cfg_dict=cfg_dict,
+         wm=model,
+diff --git a/planning/cem.py b/planning/cem.py
+index 279486a..e33d02e 100644
+--- a/planning/cem.py
++++ b/planning/cem.py
+@@ -22,6 +22,7 @@ class CEMPlanner(BasePlanner):
+         wandb_run,
+         logging_prefix="plan_0",
+         log_filename="logs.json",
++        rollout_chunk=None,  # ALPS eval: optional memory cap; None = official
+         **kwargs,
+     ):
+         super().__init__(
+@@ -40,6 +41,7 @@ class CEMPlanner(BasePlanner):
+         self.opt_steps = opt_steps
+         self.eval_every = eval_every
+         self.logging_prefix = logging_prefix
++        self.rollout_chunk = rollout_chunk
+ 
+     def init_mu_sigma(self, obs_0, actions=None):
+         """
+@@ -104,13 +106,27 @@ class CEMPlanner(BasePlanner):
+                     + mu[traj]
+                 )
+                 action[0] = mu[traj]  # optional: make the first one mu itself
+-                with torch.no_grad():
+-                    i_z_obses, i_zs = self.wm.rollout(
+-                        obs_0=cur_trans_obs_0,
+-                        act=action,
+-                    )
++                if self.rollout_chunk is None or self.rollout_chunk >= self.num_samples:
++                    with torch.no_grad():
++                        i_z_obses, i_zs = self.wm.rollout(
++                            obs_0=cur_trans_obs_0,
++                            act=action,
++                        )
+ 
+-                loss = self.objective_fn(i_z_obses, cur_z_obs_g)
++                    loss = self.objective_fn(i_z_obses, cur_z_obs_g)
++                else:
++                    # ALPS eval: the same computation in chunks of rollout_chunk samples (the samples are independent
++                    # and the modules are in eval mode, so the losses agree up to float reduction order; only the
++                    # peak memory of the predictor's attention changes).
++                    loss_chunks = []
++                    with torch.no_grad():
++                        for s in range(0, self.num_samples, self.rollout_chunk):
++                            e = min(s + self.rollout_chunk, self.num_samples)
++                            c_obs_0 = {k: v[s:e] for k, v in cur_trans_obs_0.items()}
++                            c_z_obs_g = {k: v[s:e] for k, v in cur_z_obs_g.items()}
++                            c_z_obses, _ = self.wm.rollout(obs_0=c_obs_0, act=action[s:e])
++                            loss_chunks.append(self.objective_fn(c_z_obses, c_z_obs_g))
++                    loss = torch.cat(loss_chunks, dim=0)
+                 topk_idx = torch.argsort(loss)[: self.topk]
+                 topk_action = action[topk_idx]
+                 losses.append(loss[topk_idx[0]].item())
+@@ -120,7 +136,7 @@ class CEMPlanner(BasePlanner):
+             self.wandb_run.log(
+                 {f"{self.logging_prefix}/loss": np.mean(losses), "step": i + 1}
+             )
+-            if self.evaluator is not None and i % self.eval_every == 0:
++            if self.evaluator is not None and self.eval_every <= self.opt_steps and i % self.eval_every == 0:  # ALPS eval: eval_every > opt_steps turns the per-step evaluation off, including i = 0
+                 logs, successes, _, _ = self.evaluator.eval_actions(
+                     mu, filename=f"{self.logging_prefix}_output_{i+1}"
+                 )
+diff --git a/planning/evaluator.py b/planning/evaluator.py
+index 6721611..ed04442 100644
+--- a/planning/evaluator.py
++++ b/planning/evaluator.py
+@@ -129,7 +129,15 @@ class PlanEvaluator:  # evaluator for planning
+ 
+         # plot trajs
+         if self.wm.decoder is not None:
+-            i_visuals = self.wm.decode_obs(i_z_obses)[0]["visual"]
++            # ALPS eval: the plotting decode of the imagined rollout runs under no_grad and in chunks of 10 instances. The
++            # official code decoded all n_evals x (T + 1) frames at once with autograd, which runs out of memory on 24 GB
++            # GPUs for the released Wall model. Plot-only path: no metric is computed from these images.
++            with torch.no_grad():
++                _chunks = []
++                for _s in range(0, i_z_obses["visual"].shape[0], 10):
++                    _part = {k: v[_s:_s + 10] for k, v in i_z_obses.items()}
++                    _chunks.append(self.wm.decode_obs(_part)[0]["visual"])
++                i_visuals = torch.cat(_chunks, dim=0)
+             i_visuals = self._mask_traj(
+                 i_visuals, action_len + 1
+             )  # we have action_len + 1 states
+diff --git a/train.py b/train.py
+index 64bd60a..b2e5d82 100644
+--- a/train.py
++++ b/train.py
+@@ -68,6 +68,13 @@ class Trainer:
+         self.num_reconstruct_samples = self.cfg.training.num_reconstruct_samples
+         self.total_epochs = self.cfg.training.epochs
+         self.epoch = 0
++        # ALPS eval: optional fixed number of optimizer updates, step checkpoints and step logging; absent keys = official
++        self.global_step = 0
++        self.max_steps = self.cfg.training.get("max_steps", None)
++        self.save_every_x_steps = self.cfg.training.get("save_every_x_steps", None)
++        self.log_every_steps = self.cfg.training.get("log_every_steps", None)
++        self._stop = False
++        self._t_log = time.time()
+ 
+         assert cfg.training.batch_size % self.accelerator.num_processes == 0, (
+             "Batch size must be divisible by the number of processes. "
+@@ -167,13 +174,14 @@ class Trainer:
+             ["decoder", "decoder_optimizer"] if self.train_decoder else []
+         )
+         self._keys_to_save += ["action_encoder", "proprio_encoder"]
++        self._keys_to_save += ["global_step"]  # ALPS eval (an int; plan.py ignores it)
+ 
+         self.init_models()
+         self.init_optimizers()
+ 
+         self.epoch_log = OrderedDict()
+ 
+-    def save_ckpt(self):
++    def save_ckpt(self, tag=None):  # ALPS eval: tag -> model_<tag>.pth instead of model_<epoch>.pth
+         self.accelerator.wait_for_everyone()
+         if self.accelerator.is_main_process:
+             if not os.path.exists("checkpoints"):
+@@ -182,12 +190,18 @@ class Trainer:
+             for k in self._keys_to_save:
+                 if hasattr(self.__dict__[k], "module"):
+                     ckpt[k] = self.accelerator.unwrap_model(self.__dict__[k])
++                elif k.endswith("_optimizer") and hasattr(self.__dict__[k], "optimizer"):
++                    # ALPS eval: save the inner torch optimizer. accelerate's wrapper holds the active train loader during a
++                    # mid-epoch (step) checkpoint and would pickle the whole dataset; the official resume path re-creates
++                    # the optimizers and plan.py ignores them.
++                    ckpt[k] = self.__dict__[k].optimizer
+                 else:
+                     ckpt[k] = self.__dict__[k]
++            ckpt_name = self.epoch if tag is None else tag
+             torch.save(ckpt, "checkpoints/model_latest.pth")
+-            torch.save(ckpt, f"checkpoints/model_{self.epoch}.pth")
++            torch.save(ckpt, f"checkpoints/model_{ckpt_name}.pth")
+             log.info("Saved model to {}".format(os.getcwd()))
+-            ckpt_path = os.path.join(os.getcwd(), f"checkpoints/model_{self.epoch}.pth")
++            ckpt_path = os.path.join(os.getcwd(), f"checkpoints/model_{ckpt_name}.pth")
+         else:
+             ckpt_path = None
+         model_name = self.cfg["saved_folder"].split("outputs/")[-1]
+@@ -376,6 +390,10 @@ class Trainer:
+             self.accelerator.wait_for_everyone()
+             self.val()
+             self.logs_flash(step=self.epoch)
++            if self._stop:  # ALPS eval: step budget reached inside this epoch -> final checkpoint, stop
++                self.save_ckpt(tag="final")
++                log.info(f"max_steps {self.max_steps} reached at global_step {self.global_step} (epoch {self.epoch})")
++                break
+             if self.epoch % self.cfg.training.save_every_x_epoch == 0:
+                 ckpt_path, model_name, model_epoch = self.save_ckpt()
+                 # main thread only: launch planning jobs on the saved ckpt
+@@ -467,6 +485,18 @@ class Trainer:
+                 self.predictor_optimizer.step()
+                 self.action_encoder_optimizer.step()
+ 
++            # ALPS eval: step counter (= optimizer updates), step logging, step checkpoints, step budget
++            self.global_step += 1
++            if self.log_every_steps and self.global_step % self.log_every_steps == 0 and self.accelerator.is_main_process:
++                _now = time.time()
++                log.info(f"step {self.global_step} (epoch {self.epoch} batch {i + 1}): "
++                         f"{self.log_every_steps / (_now - self._t_log):.3f} it/s, loss {loss.item():.4f}")
++                self._t_log = _now
++            if self.save_every_x_steps and self.global_step % self.save_every_x_steps == 0:
++                self.save_ckpt(tag=f"s{self.global_step}")
++            if self.max_steps is not None and self.global_step >= self.max_steps:
++                self._stop = True
++
+             loss = self.accelerator.gather_for_metrics(loss).mean()
+ 
+             loss_components = self.accelerator.gather_for_metrics(loss_components)
+@@ -533,6 +563,8 @@ class Trainer:
+ 
+             loss_components = {f"train_{k}": [v] for k, v in loss_components.items()}
+             self.logs_update(loss_components)
++            if self._stop:  # ALPS eval: leave the epoch at the step budget (the same step on every process)
++                break
+ 
+     def val(self):
+         self.model.eval()
+@@ -558,9 +590,10 @@ class Trainer:
+             obs, act, state = data
+             plot = i == 0
+             self.model.eval()
+-            z_out, visual_out, visual_reconstructed, loss, loss_components = self.model(
+-                obs, act
+-            )
++            with torch.no_grad():  # ALPS eval: validation never backpropagates; no autograd graph (memory)
++                z_out, visual_out, visual_reconstructed, loss, loss_components = self.model(
++                    obs, act
++                )
+ 
+             loss = self.accelerator.gather_for_metrics(loss).mean()
+ 

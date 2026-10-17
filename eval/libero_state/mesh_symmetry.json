@@ -1,0 +1,1005 @@
+{
+ "akita_black_bowl": {
+  "symmetry_class": "cyl",
+  "uncertain": false,
+  "spacing_m": 0.0008169545974846238,
+  "radius_xy_m": 0.056241164298158876,
+  "thr_m": 0.0024508637924538714,
+  "scores_m": {
+   "gen": 0.00069,
+   "r90": 0.00067,
+   "r180": 0.00069,
+   "gen_p90": 0.00114,
+   "r90_p90": 0.00109,
+   "r180_p90": 0.00114
+  },
+  "scores_rel_radius": {
+   "gen": 0.0123,
+   "r90": 0.0119,
+   "r180": 0.0123
+  },
+  "ratio_generic_over_180": 1.0,
+  "ratio_90_over_180": 0.97,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.0118,
+   "tilt_deg": [
+    0.19,
+    0.04
+   ]
+  },
+  "axis_centre_cyl": [
+   -0.0,
+   -0.0
+  ],
+  "axis_centre_z2": [
+   -0.0,
+   -0.0
+  ],
+  "extent_world_xyz": [
+   0.1113,
+   0.1118,
+   0.0526
+  ],
+  "n_vertices": 21263,
+  "xml": "stable_scanned_objects/akita_black_bowl/akita_black_bowl.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   0.7005751097393765,
+   -0.00015610648172277033,
+   -0.00025466771529041125,
+   0.7135786056131319
+  ],
+  "up_in_body": [
+   0.00013403923367150128,
+   -0.0005821795202791691,
+   0.9999998215502295
+  ],
+  "prior": "bowl",
+  "note": "",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (56 mm): generic 1.2%, 90deg 1.2%, 180deg 1.2% (generic/180 = 1.00); best tilted-axis generic 1.2% (tilt [0.19, 0.04] deg); vertex spacing 0.8 mm"
+ },
+ "plate": {
+  "symmetry_class": "cyl",
+  "uncertain": true,
+  "spacing_m": 0.0019497944147092228,
+  "radius_xy_m": 0.06875404766120687,
+  "thr_m": 0.005849383244127668,
+  "scores_m": {
+   "gen": 0.00198,
+   "r90": 0.00177,
+   "r180": 0.00209,
+   "gen_p90": 0.00319,
+   "r90_p90": 0.00279,
+   "r180_p90": 0.00326
+  },
+  "scores_rel_radius": {
+   "gen": 0.0287,
+   "r90": 0.0258,
+   "r180": 0.0304
+  },
+  "ratio_generic_over_180": 0.94,
+  "ratio_90_over_180": 0.85,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.0211,
+   "tilt_deg": [
+    -0.09,
+    1.54
+   ]
+  },
+  "axis_centre_cyl": [
+   0.0,
+   -0.0
+  ],
+  "axis_centre_z2": [
+   0.0,
+   -0.0
+  ],
+  "extent_world_xyz": [
+   0.1371,
+   0.1372,
+   0.0167
+  ],
+  "n_vertices": 1733,
+  "xml": "stable_scanned_objects/plate/plate.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   0.7191058788975351,
+   9.906981900625697e-05,
+   6.404444442537667e-05,
+   0.694900511597512
+  ],
+  "up_in_body": [
+   4.557787178782746e-05,
+   0.00023149242042563856,
+   0.999999972166961
+  ],
+  "prior": "plate",
+  "note": "",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (69 mm): generic 2.9%, 90deg 2.6%, 180deg 3.0% (generic/180 = 0.94); best tilted-axis generic 2.1% (tilt [-0.09, 1.54] deg); vertex spacing 1.9 mm"
+ },
+ "glazed_rim_porcelain_ramekin": {
+  "symmetry_class": "cyl",
+  "uncertain": false,
+  "spacing_m": 0.001115730096023338,
+  "radius_xy_m": 0.04461918391006973,
+  "thr_m": 0.003347190288070014,
+  "scores_m": {
+   "gen": 0.00083,
+   "r90": 0.00078,
+   "r180": 0.00084,
+   "gen_p90": 0.00138,
+   "r90_p90": 0.00132,
+   "r180_p90": 0.00136
+  },
+  "scores_rel_radius": {
+   "gen": 0.0187,
+   "r90": 0.0175,
+   "r180": 0.0188
+  },
+  "ratio_generic_over_180": 0.99,
+  "ratio_90_over_180": 0.93,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.0162,
+   "tilt_deg": [
+    -0.21,
+    0.65
+   ]
+  },
+  "axis_centre_cyl": [
+   0.0,
+   -0.0
+  ],
+  "axis_centre_z2": [
+   0.0,
+   -0.0
+  ],
+  "extent_world_xyz": [
+   0.0887,
+   0.0887,
+   0.0433
+  ],
+  "n_vertices": 8139,
+  "xml": "stable_scanned_objects/glazed_rim_porcelain_ramekin/glazed_rim_porcelain_ramekin.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   0.7071067709955154,
+   -2.0434072236732818e-06,
+   2.6477716509948416e-06,
+   0.7071067913696697
+  ],
+  "up_in_body": [
+   -6.634329110966064e-06,
+   8.547003744752146e-07,
+   0.9999999999776277
+  ],
+  "prior": "ramekin",
+  "note": "",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (45 mm): generic 1.9%, 90deg 1.8%, 180deg 1.9% (generic/180 = 0.99); best tilted-axis generic 1.6% (tilt [-0.21, 0.65] deg); vertex spacing 1.1 mm"
+ },
+ "basket": {
+  "symmetry_class": "z2",
+  "uncertain": true,
+  "spacing_m": 0.001455100584422818,
+  "radius_xy_m": 0.11317092103084295,
+  "thr_m": 0.004365301753268454,
+  "scores_m": {
+   "gen": 0.00876,
+   "r90": 0.00418,
+   "r180": 0.00234,
+   "gen_p90": 0.02113,
+   "r90_p90": 0.0072,
+   "r180_p90": 0.00432
+  },
+  "scores_rel_radius": {
+   "gen": 0.0774,
+   "r90": 0.0369,
+   "r180": 0.0207
+  },
+  "ratio_generic_over_180": 3.74,
+  "ratio_90_over_180": 1.78,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.0773,
+   "tilt_deg": [
+    0.03,
+    0.3
+   ]
+  },
+  "axis_centre_cyl": [
+   0.0005,
+   0.0026
+  ],
+  "axis_centre_z2": [
+   0.0006,
+   0.0011
+  ],
+  "extent_world_xyz": [
+   0.1622,
+   0.1734,
+   0.1469
+  ],
+  "n_vertices": 33143,
+  "xml": "stable_scanned_objects/basket/basket.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   0.7071047518250729,
+   -0.0016939253283745881,
+   0.00169380068037065,
+   0.7071047529204135
+  ],
+  "up_in_body": [
+   -0.004790954757481813,
+   -1.7648562788963318e-07,
+   0.9999885233114583
+  ],
+  "prior": "rectangular basket with 2 handles",
+  "note": "",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (113 mm): generic 7.7%, 90deg 3.7%, 180deg 2.1% (generic/180 = 3.74); best tilted-axis generic 7.7% (tilt [0.03, 0.3] deg); vertex spacing 1.5 mm"
+ },
+ "cookies": {
+  "symmetry_class": "z2",
+  "uncertain": false,
+  "spacing_m": 0.0007072856668349229,
+  "radius_xy_m": 0.0515870353834413,
+  "thr_m": 0.0021218570005047685,
+  "scores_m": {
+   "gen": 0.00504,
+   "r90": 0.00553,
+   "r180": 0.00086,
+   "gen_p90": 0.01497,
+   "r90_p90": 0.0108,
+   "r180_p90": 0.00159
+  },
+  "scores_rel_radius": {
+   "gen": 0.0976,
+   "r90": 0.1072,
+   "r180": 0.0168
+  },
+  "ratio_generic_over_180": 5.82,
+  "ratio_90_over_180": 6.39,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.0975,
+   "tilt_deg": [
+    -0.23,
+    -0.01
+   ]
+  },
+  "axis_centre_cyl": [
+   -0.0,
+   0.0005
+  ],
+  "axis_centre_z2": [
+   -0.0,
+   0.0001
+  ],
+  "extent_world_xyz": [
+   0.0836,
+   0.0614,
+   0.0201
+  ],
+  "n_vertices": 8927,
+  "xml": "stable_hope_objects/cookies/cookies.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   0.7071067797549354,
+   -7.045459921543335e-07,
+   -2.1396824645623023e-06,
+   0.7071067826145715
+  ],
+  "up_in_body": [
+   2.029589495577966e-06,
+   -4.0223467294708826e-06,
+   0.9999999999898508
+  ],
+  "prior": "flat rectangular box",
+  "note": "geometry only; printed labels break the symmetry visually",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (52 mm): generic 9.8%, 90deg 10.7%, 180deg 1.7% (generic/180 = 5.82); best tilted-axis generic 9.8% (tilt [-0.23, -0.01] deg); vertex spacing 0.7 mm"
+ },
+ "alphabet_soup": {
+  "symmetry_class": "cyl",
+  "uncertain": true,
+  "spacing_m": 0.001204561516226012,
+  "radius_xy_m": 0.03846561651847951,
+  "thr_m": 0.003613684548678036,
+  "scores_m": {
+   "gen": 0.001,
+   "r90": 0.00097,
+   "r180": 0.00099,
+   "gen_p90": 0.00172,
+   "r90_p90": 0.00169,
+   "r180_p90": 0.00167
+  },
+  "scores_rel_radius": {
+   "gen": 0.026,
+   "r90": 0.0252,
+   "r180": 0.0256
+  },
+  "ratio_generic_over_180": 1.01,
+  "ratio_90_over_180": 0.98,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.0251,
+   "tilt_deg": [
+    0.14,
+    -0.33
+   ]
+  },
+  "axis_centre_cyl": [
+   0.0002,
+   -0.0029
+  ],
+  "axis_centre_z2": [
+   0.0002,
+   -0.0029
+  ],
+  "extent_world_xyz": [
+   0.0661,
+   0.0711,
+   0.0836
+  ],
+  "n_vertices": 6932,
+  "xml": "stable_hope_objects/alphabet_soup/alphabet_soup.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   -0.002256280162669325,
+   0.0022714726339645745,
+   0.7076938391466674,
+   0.7065119812471348
+  ],
+  "up_in_body": [
+   0.00640315655618906,
+   0.9999780654907227,
+   -0.0016713814175091102
+  ],
+  "prior": "can",
+  "note": "geometry only; printed labels break the symmetry visually",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (38 mm): generic 2.6%, 90deg 2.5%, 180deg 2.6% (generic/180 = 1.01); best tilted-axis generic 2.5% (tilt [0.14, -0.33] deg); vertex spacing 1.2 mm"
+ },
+ "bbq_sauce": {
+  "symmetry_class": "z2",
+  "uncertain": true,
+  "spacing_m": 0.0009740572197365982,
+  "radius_xy_m": 0.02491502169043967,
+  "thr_m": 0.0029221716592097947,
+  "scores_m": {
+   "gen": 0.00262,
+   "r90": 0.00274,
+   "r180": 0.00064,
+   "gen_p90": 0.00701,
+   "r90_p90": 0.00733,
+   "r180_p90": 0.00102
+  },
+  "scores_rel_radius": {
+   "gen": 0.1052,
+   "r90": 0.11,
+   "r180": 0.0257
+  },
+  "ratio_generic_over_180": 4.1,
+  "ratio_90_over_180": 4.28,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.105,
+   "tilt_deg": [
+    0.34,
+    0.18
+   ]
+  },
+  "axis_centre_cyl": [
+   -0.0,
+   0.0001
+  ],
+  "axis_centre_z2": [
+   -0.0,
+   0.0
+  ],
+  "extent_world_xyz": [
+   0.0335,
+   0.0498,
+   0.1142
+  ],
+  "n_vertices": 8047,
+  "xml": "stable_hope_objects/bbq_sauce/bbq_sauce.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   0.7071067804493723,
+   5.664107457724789e-08,
+   4.402994202733226e-07,
+   0.7071067819235834
+  ],
+  "up_in_body": [
+   -5.425748668130836e-07,
+   7.027799711067928e-07,
+   0.9999999999996059
+  ],
+  "prior": "bottle",
+  "note": "geometry only; printed labels break the symmetry visually",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (25 mm): generic 10.5%, 90deg 11.0%, 180deg 2.6% (generic/180 = 4.10); best tilted-axis generic 10.5% (tilt [0.34, 0.18] deg); vertex spacing 1.0 mm"
+ },
+ "butter": {
+  "symmetry_class": "z2",
+  "uncertain": false,
+  "spacing_m": 0.0007279973101067349,
+  "radius_xy_m": 0.0428347609840711,
+  "thr_m": 0.0021839919303202047,
+  "scores_m": {
+   "gen": 0.00884,
+   "r90": 0.0097,
+   "r180": 0.00062,
+   "gen_p90": 0.02005,
+   "r90_p90": 0.01884,
+   "r180_p90": 0.00098
+  },
+  "scores_rel_radius": {
+   "gen": 0.2064,
+   "r90": 0.2264,
+   "r180": 0.0145
+  },
+  "ratio_generic_over_180": 14.25,
+  "ratio_90_over_180": 15.64,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.2055,
+   "tilt_deg": [
+    -0.17,
+    0.3
+   ]
+  },
+  "axis_centre_cyl": [
+   0.0,
+   -0.0003
+  ],
+  "axis_centre_z2": [
+   0.0,
+   -0.0002
+  ],
+  "extent_world_xyz": [
+   0.0775,
+   0.0396,
+   0.018
+  ],
+  "n_vertices": 7200,
+  "xml": "stable_hope_objects/butter/butter.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   8.874619010929745e-10,
+   -4.1738196402995635e-07,
+   -2.4216610186799907e-06,
+   0.9999999999969807
+  ],
+  "up_in_body": [
+   -8.347639095518389e-07,
+   -4.843322130909655e-06,
+   0.9999999999879228
+  ],
+  "prior": "rectangular box",
+  "note": "geometry only; printed labels break the symmetry visually",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (43 mm): generic 20.6%, 90deg 22.6%, 180deg 1.5% (generic/180 = 14.25); best tilted-axis generic 20.5% (tilt [-0.17, 0.3] deg); vertex spacing 0.7 mm"
+ },
+ "chocolate_pudding": {
+  "symmetry_class": "z2",
+  "uncertain": false,
+  "spacing_m": 0.0007918008459974531,
+  "radius_xy_m": 0.04798414793002118,
+  "thr_m": 0.0023754025379923594,
+  "scores_m": {
+   "gen": 0.00782,
+   "r90": 0.00867,
+   "r180": 0.00088,
+   "gen_p90": 0.01878,
+   "r90_p90": 0.01678,
+   "r180_p90": 0.00146
+  },
+  "scores_rel_radius": {
+   "gen": 0.163,
+   "r90": 0.1806,
+   "r180": 0.0183
+  },
+  "ratio_generic_over_180": 8.89,
+  "ratio_90_over_180": 9.86,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.1619,
+   "tilt_deg": [
+    0.06,
+    -1.25
+   ]
+  },
+  "axis_centre_cyl": [
+   0.001,
+   -0.0
+  ],
+  "axis_centre_z2": [
+   0.0003,
+   -0.0
+  ],
+  "extent_world_xyz": [
+   0.0835,
+   0.0495,
+   0.0299
+  ],
+  "n_vertices": 9029,
+  "xml": "stable_hope_objects/chocolate_pudding/chocolate_pudding.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   3.943150939032472e-09,
+   -3.5284269663621435e-07,
+   1.1637215410382898e-06,
+   0.9999999999992607
+  ],
+  "up_in_body": [
+   -7.056854087750253e-07,
+   2.3274430986930383e-06,
+   0.9999999999970425
+  ],
+  "prior": "rectangular box",
+  "note": "geometry only; printed labels break the symmetry visually",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (48 mm): generic 16.3%, 90deg 18.1%, 180deg 1.8% (generic/180 = 8.89); best tilted-axis generic 16.2% (tilt [0.06, -1.25] deg); vertex spacing 0.8 mm"
+ },
+ "cream_cheese": {
+  "symmetry_class": "z2",
+  "uncertain": false,
+  "spacing_m": 0.0007951700647271845,
+  "radius_xy_m": 0.04617515975243425,
+  "thr_m": 0.0023855101941815536,
+  "scores_m": {
+   "gen": 0.00808,
+   "r90": 0.00881,
+   "r180": 0.00061,
+   "gen_p90": 0.02043,
+   "r90_p90": 0.01989,
+   "r180_p90": 0.00103
+  },
+  "scores_rel_radius": {
+   "gen": 0.1749,
+   "r90": 0.1907,
+   "r180": 0.0132
+  },
+  "ratio_generic_over_180": 13.27,
+  "ratio_90_over_180": 14.47,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.1746,
+   "tilt_deg": [
+    -0.04,
+    -1.04
+   ]
+  },
+  "axis_centre_cyl": [
+   -0.0002,
+   0.0001
+  ],
+  "axis_centre_z2": [
+   -0.0003,
+   -0.0001
+  ],
+  "extent_world_xyz": [
+   0.0829,
+   0.0426,
+   0.0194
+  ],
+  "n_vertices": 8121,
+  "xml": "stable_hope_objects/cream_cheese/cream_cheese.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   1.6041072209964715e-10,
+   -3.1630390031167044e-07,
+   -1.069781922505643e-06,
+   0.9999999999993777
+  ],
+  "up_in_body": [
+   -6.326077937046648e-07,
+   -2.139563775926945e-06,
+   0.9999999999975111
+  ],
+  "prior": "rectangular box",
+  "note": "geometry only; printed labels break the symmetry visually",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (46 mm): generic 17.5%, 90deg 19.1%, 180deg 1.3% (generic/180 = 13.27); best tilted-axis generic 17.5% (tilt [-0.04, -1.04] deg); vertex spacing 0.8 mm"
+ },
+ "ketchup": {
+  "symmetry_class": "z2",
+  "uncertain": true,
+  "spacing_m": 0.0011658636779468227,
+  "radius_xy_m": 0.03241254339281939,
+  "thr_m": 0.003497591033840468,
+  "scores_m": {
+   "gen": 0.00341,
+   "r90": 0.0035,
+   "r180": 0.001,
+   "gen_p90": 0.00891,
+   "r90_p90": 0.00925,
+   "r180_p90": 0.00168
+  },
+  "scores_rel_radius": {
+   "gen": 0.1053,
+   "r90": 0.1081,
+   "r180": 0.031
+  },
+  "ratio_generic_over_180": 3.4,
+  "ratio_90_over_180": 3.49,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.1037,
+   "tilt_deg": [
+    0.66,
+    -0.17
+   ]
+  },
+  "axis_centre_cyl": [
+   -0.0,
+   0.0
+  ],
+  "axis_centre_z2": [
+   -0.0,
+   0.0
+  ],
+  "extent_world_xyz": [
+   0.0434,
+   0.0645,
+   0.1486
+  ],
+  "n_vertices": 7770,
+  "xml": "stable_hope_objects/ketchup/ketchup.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   0.5000089810347504,
+   0.4999910675789391,
+   0.4999826284206401,
+   0.500017322203393
+  ],
+  "up_in_body": [
+   1.677870750427246e-05,
+   1.0,
+   5.263090133666992e-05
+  ],
+  "prior": "bottle",
+  "note": "geometry only; printed labels break the symmetry visually",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (32 mm): generic 10.5%, 90deg 10.8%, 180deg 3.1% (generic/180 = 3.40); best tilted-axis generic 10.4% (tilt [0.66, -0.17] deg); vertex spacing 1.2 mm"
+ },
+ "milk": {
+  "symmetry_class": "z2",
+  "uncertain": true,
+  "spacing_m": 0.001069973276963089,
+  "radius_xy_m": 0.03749083505338338,
+  "thr_m": 0.0032099198308892674,
+  "scores_m": {
+   "gen": 0.00523,
+   "r90": 0.00384,
+   "r180": 0.00117,
+   "gen_p90": 0.01051,
+   "r90_p90": 0.01094,
+   "r180_p90": 0.00214
+  },
+  "scores_rel_radius": {
+   "gen": 0.1394,
+   "r90": 0.1024,
+   "r180": 0.0312
+  },
+  "ratio_generic_over_180": 4.47,
+  "ratio_90_over_180": 3.28,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.139,
+   "tilt_deg": [
+    0.08,
+    -0.63
+   ]
+  },
+  "axis_centre_cyl": [
+   0.0003,
+   -0.0001
+  ],
+  "axis_centre_z2": [
+   0.0003,
+   -0.0001
+  ],
+  "extent_world_xyz": [
+   0.0549,
+   0.0541,
+   0.1428
+  ],
+  "n_vertices": 7309,
+  "xml": "stable_hope_objects/milk/milk.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   0.49999747121531773,
+   0.50000258809041,
+   0.499998526710387,
+   0.5000014139666227
+  ],
+  "up_in_body": [
+   7.987022399902344e-06,
+   1.0,
+   -2.2351741790771484e-06
+  ],
+  "prior": "gable-top carton",
+  "note": "geometry only; printed labels break the symmetry visually",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (37 mm): generic 13.9%, 90deg 10.2%, 180deg 3.1% (generic/180 = 4.47); best tilted-axis generic 13.9% (tilt [0.08, -0.63] deg); vertex spacing 1.1 mm"
+ },
+ "orange_juice": {
+  "symmetry_class": "z2",
+  "uncertain": true,
+  "spacing_m": 0.0009170608392483131,
+  "radius_xy_m": 0.037239287373719974,
+  "thr_m": 0.0027511825177449394,
+  "scores_m": {
+   "gen": 0.00546,
+   "r90": 0.00354,
+   "r180": 0.00089,
+   "gen_p90": 0.0104,
+   "r90_p90": 0.01069,
+   "r180_p90": 0.00158
+  },
+  "scores_rel_radius": {
+   "gen": 0.1467,
+   "r90": 0.095,
+   "r180": 0.024
+  },
+  "ratio_generic_over_180": 6.11,
+  "ratio_90_over_180": 3.96,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.1462,
+   "tilt_deg": [
+    -0.47,
+    -0.63
+   ]
+  },
+  "axis_centre_cyl": [
+   -0.0,
+   -0.0001
+  ],
+  "axis_centre_z2": [
+   -0.0,
+   -0.0001
+  ],
+  "extent_world_xyz": [
+   0.0546,
+   0.0537,
+   0.1444
+  ],
+  "n_vertices": 9968,
+  "xml": "stable_hope_objects/orange_juice/orange_juice.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   0.5000009523069192,
+   0.49999902761655973,
+   0.500001468107592,
+   0.4999985519628245
+  ],
+  "up_in_body": [
+   -4.857778549194336e-06,
+   1.0,
+   -1.0728836059570312e-06
+  ],
+  "prior": "gable-top carton",
+  "note": "geometry only; printed labels break the symmetry visually",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (37 mm): generic 14.7%, 90deg 9.5%, 180deg 2.4% (generic/180 = 6.11); best tilted-axis generic 14.6% (tilt [-0.47, -0.63] deg); vertex spacing 0.9 mm"
+ },
+ "salad_dressing": {
+  "symmetry_class": "z2",
+  "uncertain": true,
+  "spacing_m": 0.0010181152484260848,
+  "radius_xy_m": 0.03231676663570328,
+  "thr_m": 0.0030543457452782545,
+  "scores_m": {
+   "gen": 0.00251,
+   "r90": 0.00259,
+   "r180": 0.00089,
+   "gen_p90": 0.0082,
+   "r90_p90": 0.0084,
+   "r180_p90": 0.00141
+  },
+  "scores_rel_radius": {
+   "gen": 0.0778,
+   "r90": 0.0803,
+   "r180": 0.0275
+  },
+  "ratio_generic_over_180": 2.83,
+  "ratio_90_over_180": 2.92,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.0767,
+   "tilt_deg": [
+    0.25,
+    -0.36
+   ]
+  },
+  "axis_centre_cyl": [
+   0.0,
+   -0.0002
+  ],
+  "axis_centre_z2": [
+   0.0,
+   -0.0004
+  ],
+  "extent_world_xyz": [
+   0.0437,
+   0.064,
+   0.1474
+  ],
+  "n_vertices": 9807,
+  "xml": "stable_hope_objects/salad_dressing/salad_dressing.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   0.5000311721807015,
+   0.49996822326192253,
+   0.5000116132239374,
+   0.4999889890958657
+  ],
+  "up_in_body": [
+   -8.559226989746094e-05,
+   1.0,
+   4.032254219055176e-05
+  ],
+  "prior": "bottle",
+  "note": "geometry only; printed labels break the symmetry visually",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (32 mm): generic 7.8%, 90deg 8.0%, 180deg 2.8% (generic/180 = 2.83); best tilted-axis generic 7.7% (tilt [0.25, -0.36] deg); vertex spacing 1.0 mm"
+ },
+ "tomato_sauce": {
+  "symmetry_class": "cyl",
+  "uncertain": true,
+  "spacing_m": 0.0009156250384989167,
+  "radius_xy_m": 0.03595974268988169,
+  "thr_m": 0.0027468751154967504,
+  "scores_m": {
+   "gen": 0.0017,
+   "r90": 0.00142,
+   "r180": 0.00178,
+   "gen_p90": 0.00361,
+   "r90_p90": 0.0027,
+   "r180_p90": 0.00395
+  },
+  "scores_rel_radius": {
+   "gen": 0.0472,
+   "r90": 0.0394,
+   "r180": 0.0496
+  },
+  "ratio_generic_over_180": 0.95,
+  "ratio_90_over_180": 0.8,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.0202,
+   "tilt_deg": [
+    0.35,
+    -0.15
+   ]
+  },
+  "axis_centre_cyl": [
+   0.0003,
+   0.0
+  ],
+  "axis_centre_z2": [
+   0.0003,
+   0.0
+  ],
+  "extent_world_xyz": [
+   0.0665,
+   0.0702,
+   0.083
+  ],
+  "n_vertices": 14296,
+  "xml": "stable_hope_objects/tomato_sauce/tomato_sauce.xml",
+  "n_mesh_geoms": 1,
+  "body_quat_wxyz": [
+   -0.002290968199609783,
+   0.002291300195945877,
+   0.707626522781995,
+   0.7065792281574539
+  ],
+  "up_in_body": [
+   0.006480270065367222,
+   0.9999779462814331,
+   -0.0014811851187914726
+  ],
+  "prior": "can",
+  "note": "geometry only; printed labels break the symmetry visually",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (36 mm): generic 4.7%, 90deg 3.9%, 180deg 5.0% (generic/180 = 0.95); best tilted-axis generic 2.0% (tilt [0.35, -0.15] deg); vertex spacing 0.9 mm"
+ },
+ "wooden_cabinet": {
+  "symmetry_class": "none",
+  "uncertain": false,
+  "spacing_m": 0.0017034433097378448,
+  "radius_xy_m": 0.16183109199659354,
+  "thr_m": 0.0051103299292135345,
+  "scores_m": {
+   "gen": 0.04786,
+   "r90": 0.04345,
+   "r180": 0.037,
+   "gen_p90": 0.07351,
+   "r90_p90": 0.05921,
+   "r180_p90": 0.0584
+  },
+  "scores_rel_radius": {
+   "gen": 0.2957,
+   "r90": 0.2685,
+   "r180": 0.2286
+  },
+  "ratio_generic_over_180": 1.29,
+  "ratio_90_over_180": 1.17,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.2768,
+   "tilt_deg": [
+    -4.22,
+    5.56
+   ]
+  },
+  "axis_centre_cyl": [
+   -0.0018,
+   -0.0221
+  ],
+  "axis_centre_z2": [
+   -0.0086,
+   -0.0098
+  ],
+  "extent_world_xyz": [
+   0.3128,
+   0.2814,
+   0.217
+  ],
+  "n_vertices": 804,
+  "xml": "articulated_objects/wooden_cabinet.xml",
+  "n_mesh_geoms": 7,
+  "body_quat_wxyz": [
+   0.21823325998522636,
+   0.0,
+   0.0,
+   0.9758966360410413
+  ],
+  "up_in_body": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "prior": "3-drawer cabinet (fixture)",
+  "note": "articulated fixture: drawers/knob on one side",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (162 mm): generic 29.6%, 90deg 26.9%, 180deg 22.9% (generic/180 = 1.29); best tilted-axis generic 27.7% (tilt [-4.22, 5.56] deg); vertex spacing 1.7 mm"
+ },
+ "flat_stove": {
+  "symmetry_class": "none",
+  "uncertain": false,
+  "spacing_m": 0.003367912303301179,
+  "radius_xy_m": 0.13689396006736348,
+  "thr_m": 0.010103736909903537,
+  "scores_m": {
+   "gen": 0.03333,
+   "r90": 0.04014,
+   "r180": 0.01317,
+   "gen_p90": 0.08197,
+   "r90_p90": 0.07973,
+   "r180_p90": 0.02479
+  },
+  "scores_rel_radius": {
+   "gen": 0.2435,
+   "r90": 0.2932,
+   "r180": 0.0962
+  },
+  "ratio_generic_over_180": 2.53,
+  "ratio_90_over_180": 3.05,
+  "best_axis_fit": {
+   "gen_rel_radius": 0.2637,
+   "tilt_deg": [
+    -2.14,
+    -0.5
+   ]
+  },
+  "axis_centre_cyl": [
+   0.0953,
+   -0.0072
+  ],
+  "axis_centre_z2": [
+   0.0781,
+   -0.0021
+  ],
+  "extent_world_xyz": [
+   0.2644,
+   0.13,
+   0.0539
+  ],
+  "n_vertices": 530,
+  "xml": "articulated_objects/flat_stove.xml",
+  "n_mesh_geoms": 2,
+  "body_quat_wxyz": [
+   1.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "up_in_body": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "prior": "stove with side knob (fixture)",
+  "note": "articulated fixture: drawers/knob on one side",
+  "evidence": "mean NN residual of the yaw-rotated mesh as % of xy radius (137 mm): generic 24.3%, 90deg 29.3%, 180deg 9.6% (generic/180 = 2.53); best tilted-axis generic 26.4% (tilt [-2.14, -0.5] deg); vertex spacing 3.4 mm"
+ }
+}

@@ -1,0 +1,9 @@
+# PyTorch training code of ALPS (CPU tests run with torch 2.5.1).
+torch>=2.2
+numpy
+pillow
+safetensors>=0.4
+# tests
+pytest
+# parity tests against train_jax (optional): jax, flax, optax  (tested with jax 0.4.35, flax 0.10.0, optax 0.2.3)
+# TF reference of the image transforms (optional, separate environment): tensorflow (tested with 2.21)

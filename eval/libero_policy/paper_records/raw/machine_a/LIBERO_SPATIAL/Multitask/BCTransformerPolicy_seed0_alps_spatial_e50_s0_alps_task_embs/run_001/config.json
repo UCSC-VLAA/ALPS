@@ -1,0 +1,217 @@
+{
+    "seed": 0,
+    "use_wandb": false,
+    "wandb_project": "lifelong learning",
+    "folder": "<LIBERO_DATA>",
+    "bddl_folder": "<LIBERO_ROOT>/libero/libero/bddl_files",
+    "init_states_folder": "<LIBERO_ROOT>/libero/libero/init_files",
+    "load_previous_model": false,
+    "device": "cuda",
+    "task_embedding_format": "file:<TASK_EMBEDDINGS_DIR>/alps_task_embs.npz",
+    "task_embedding_one_hot_offset": 1,
+    "pretrain": false,
+    "pretrain_model_path": "",
+    "benchmark_name": "LIBERO_SPATIAL",
+    "data": {
+        "data_modality": [
+            "image",
+            "proprio"
+        ],
+        "seq_len": 10,
+        "frame_stack": 1,
+        "use_eye_in_hand": true,
+        "use_gripper": true,
+        "use_joint": true,
+        "use_ee": false,
+        "max_word_len": 25,
+        "state_dim": null,
+        "num_kp": 64,
+        "img_h": 128,
+        "img_w": 128,
+        "task_group_size": 1,
+        "task_order_index": 0,
+        "shuffle_task": false,
+        "obs": {
+            "modality": {
+                "rgb": [
+                    "agentview_rgb",
+                    "eye_in_hand_rgb"
+                ],
+                "depth": [],
+                "low_dim": [
+                    "gripper_states",
+                    "joint_states"
+                ]
+            }
+        },
+        "obs_key_mapping": {
+            "agentview_rgb": "agentview_image",
+            "eye_in_hand_rgb": "robot0_eye_in_hand_image",
+            "gripper_states": "robot0_gripper_qpos",
+            "joint_states": "robot0_joint_pos"
+        },
+        "affine_translate": 4,
+        "action_scale": 1.0,
+        "train_dataset_ratio": 0.8
+    },
+    "policy": {
+        "color_aug": {
+            "network": "BatchWiseImgColorJitterAug",
+            "network_kwargs": {
+                "input_shape": null,
+                "brightness": 0.3,
+                "contrast": 0.3,
+                "saturation": 0.3,
+                "hue": 0.3,
+                "epsilon": 0.1
+            }
+        },
+        "translation_aug": {
+            "network": "TranslationAug",
+            "network_kwargs": {
+                "input_shape": [
+                    3,
+                    128,
+                    128
+                ],
+                "translation": 8
+            }
+        },
+        "image_encoder": {
+            "network": "FrozenEncoderPool",
+            "network_kwargs": {
+                "encoder_ckpt": "<alps_vitb16.safetensors>",
+                "num_queries": 1,
+                "pool_heads": 4,
+                "language_fusion": "film",
+                "flip_ud": true,
+                "input_shape": [
+                    3,
+                    128,
+                    128
+                ],
+                "output_size": 64,
+                "language_dim": 768
+            }
+        },
+        "language_encoder": {
+            "network": "MLPEncoder",
+            "network_kwargs": {
+                "input_size": 768,
+                "hidden_size": 128,
+                "output_size": 64,
+                "num_layers": 1
+            }
+        },
+        "temporal_position_encoding": {
+            "network": "SinusoidalPositionEncoding",
+            "network_kwargs": {
+                "input_size": 64,
+                "inv_freq_factor": 10,
+                "factor_ratio": null
+            }
+        },
+        "policy_head": {
+            "network": "GMMHead",
+            "network_kwargs": {
+                "hidden_size": 1024,
+                "num_layers": 2,
+                "min_std": 0.0001,
+                "num_modes": 5,
+                "low_eval_noise": false,
+                "activation": "softplus",
+                "input_size": 64,
+                "output_size": 7
+            },
+            "loss_kwargs": {
+                "loss_coef": 1.0
+            }
+        },
+        "policy_type": "BCTransformerPolicy",
+        "extra_num_layers": 0,
+        "extra_hidden_size": 128,
+        "embed_size": 64,
+        "transformer_input_size": null,
+        "transformer_num_layers": 4,
+        "transformer_num_heads": 6,
+        "transformer_head_output_size": 64,
+        "transformer_mlp_hidden_size": 256,
+        "transformer_dropout": 0.1,
+        "transformer_max_seq_len": 10
+    },
+    "train": {
+        "optimizer": {
+            "name": "torch.optim.AdamW",
+            "kwargs": {
+                "lr": 0.0001,
+                "betas": [
+                    0.9,
+                    0.999
+                ],
+                "weight_decay": 0.0001
+            }
+        },
+        "scheduler": {
+            "name": "torch.optim.lr_scheduler.CosineAnnealingLR",
+            "kwargs": {
+                "eta_min": 1e-05,
+                "last_epoch": -1
+            }
+        },
+        "n_epochs": 50,
+        "batch_size": 32,
+        "num_workers": 4,
+        "grad_clip": 100.0,
+        "loss_scale": 1.0,
+        "resume": false,
+        "resume_path": "",
+        "debug": false,
+        "use_augmentation": true
+    },
+    "eval": {
+        "load_path": "",
+        "eval": false,
+        "batch_size": 64,
+        "num_workers": 0,
+        "n_eval": 20,
+        "eval_every": 50,
+        "max_steps": 600,
+        "use_mp": true,
+        "num_procs": 20,
+        "save_sim_states": false
+    },
+    "lifelong": {
+        "algo": "Multitask",
+        "eval_in_train": false
+    },
+    "experiment_dir": "./experiments/LIBERO_SPATIAL/Multitask/BCTransformerPolicy_seed0_alps_spatial_e50_s0_alps_task_embs/run_001",
+    "experiment_name": "LIBERO_SPATIAL_Multitask_BCTransformerPolicy_seed0_alps_spatial_e50_s0_alps_task_embs_run_001",
+    "shape_meta": {
+        "ac_dim": 7,
+        "all_shapes": {
+            "agentview_rgb": [
+                3,
+                128,
+                128
+            ],
+            "eye_in_hand_rgb": [
+                3,
+                128,
+                128
+            ],
+            "gripper_states": [
+                2
+            ],
+            "joint_states": [
+                7
+            ]
+        },
+        "all_obs_keys": [
+            "agentview_rgb",
+            "eye_in_hand_rgb",
+            "gripper_states",
+            "joint_states"
+        ],
+        "use_images": true
+    }
+}

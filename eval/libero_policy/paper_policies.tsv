@@ -1,0 +1,68 @@
+# The 63 LIBERO policies of the ALPS paper (paper_records/policies.csv has every detail and the records of each run).
+# Columns: policy; where the paper uses it; suite; encoder (bridge name); weights (environment variable holding the file,
+# - = none); suite argument of train_policy.sh; training seed; epochs; instructions (bert = LIBERO's frozen BERT, else the
+# embedding file of embed_instructions.py); value printed in the paper (- = only in the retraining summary); success of the run.
+policy	used_in	suite	encoder	weights_env	suite_arg	seed	epochs	instructions	paper_value	run_success
+LIBERO-Long | ALPS | BERT | seed 1	Table 2 (BERT); ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Long	alps	ALPS_WEIGHTS	10	1	25	bert	69.7	69.7
+LIBERO-Goal | ALPS | BERT | seed 0	Table 2 (BERT); ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Goal	alps	ALPS_WEIGHTS	goal	0	50	bert	85.1	85.1
+LIBERO-Spatial | ALPS | BERT | seed 0	Table 2 (BERT); ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Spatial	alps	ALPS_WEIGHTS	spatial	0	50	bert	86.5	86.5
+LIBERO-Object | ALPS | BERT | seed 0	Table 2 (BERT); ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Object	alps	ALPS_WEIGHTS	object	0	50	bert	92.2	92.2
+LIBERO-Long | ALPS (Stage 1) | BERT | seed 1	Table 2 (BERT)	LIBERO-Long	alps_stage1	ALPS_STAGE1_WEIGHTS	10	1	25	bert	68.9	68.9
+LIBERO-Goal | ALPS (Stage 1) | BERT | seed 0	Table 2 (BERT)	LIBERO-Goal	alps_stage1	ALPS_STAGE1_WEIGHTS	goal	0	50	bert	84.3	84.3
+LIBERO-Spatial | ALPS (Stage 1) | BERT | seed 0	Table 2 (BERT)	LIBERO-Spatial	alps_stage1	ALPS_STAGE1_WEIGHTS	spatial	0	50	bert	76.8	76.8
+LIBERO-Object | ALPS (Stage 1) | BERT | seed 0	Table 2 (BERT)	LIBERO-Object	alps_stage1	ALPS_STAGE1_WEIGHTS	object	0	50	bert	94.3	94.3
+LIBERO-Long | CLIP-B/16 | BERT | seed 1	Table 2 (BERT)	LIBERO-Long	clip_b16_qg	-	10	1	25	bert	56.3	56.3
+LIBERO-Goal | CLIP-B/16 | BERT | seed 0	Table 2 (BERT)	LIBERO-Goal	clip_b16_qg	-	goal	0	50	bert	74.1	74.1
+LIBERO-Spatial | CLIP-B/16 | BERT | seed 0	Table 2 (BERT)	LIBERO-Spatial	clip_b16_qg	-	spatial	0	50	bert	76.5	76.5
+LIBERO-Object | CLIP-B/16 | BERT | seed 0	Table 2 (BERT)	LIBERO-Object	clip_b16_qg	-	object	0	50	bert	93.2	93.2
+LIBERO-Long | C-RADIOv3-B | BERT | seed 1	Table 2 (BERT)	LIBERO-Long	cradio_v3_b	RADIO_CKPT	10	1	25	bert	66.0	66.0
+LIBERO-Goal | C-RADIOv3-B | BERT | seed 0	Table 2 (BERT)	LIBERO-Goal	cradio_v3_b	RADIO_CKPT	goal	0	50	bert	79.9	79.9
+LIBERO-Spatial | C-RADIOv3-B | BERT | seed 0	Table 2 (BERT)	LIBERO-Spatial	cradio_v3_b	RADIO_CKPT	spatial	0	50	bert	74.9	74.9
+LIBERO-Object | C-RADIOv3-B | BERT | seed 0	Table 2 (BERT)	LIBERO-Object	cradio_v3_b	RADIO_CKPT	object	0	50	bert	92.3	92.3
+LIBERO-Long | DINOv2-B/14 | BERT | seed 1	Table 2 (BERT)	LIBERO-Long	dinov2_b14_timm	-	10	1	25	bert	66.5	66.5
+LIBERO-Goal | DINOv2-B/14 | BERT | seed 0	Table 2 (BERT)	LIBERO-Goal	dinov2_b14_timm	-	goal	0	50	bert	78.6	78.6
+LIBERO-Spatial | DINOv2-B/14 | BERT | seed 0	Table 2 (BERT)	LIBERO-Spatial	dinov2_b14_timm	-	spatial	0	50	bert	80.5	80.5
+LIBERO-Object | DINOv2-B/14 | BERT | seed 0	Table 2 (BERT)	LIBERO-Object	dinov2_b14_timm	-	object	0	50	bert	88.1	88.1
+LIBERO-Long | DINOv3-B/16 | BERT | seed 1	Table 2 (BERT)	LIBERO-Long	dinov3_b16	-	10	1	25	bert	68.4	68.4
+LIBERO-Goal | DINOv3-B/16 | BERT | seed 0	Table 2 (BERT)	LIBERO-Goal	dinov3_b16	-	goal	0	50	bert	72.7	72.7
+LIBERO-Spatial | DINOv3-B/16 | BERT | seed 0	Table 2 (BERT)	LIBERO-Spatial	dinov3_b16	-	spatial	0	50	bert	80.7	80.7
+LIBERO-Object | DINOv3-B/16 | BERT | seed 0	Table 2 (BERT)	LIBERO-Object	dinov3_b16	-	object	0	50	bert	94.4	94.4
+LIBERO-Long | SigLIP 2-B/16 | BERT | seed 1	Table 2 (BERT)	LIBERO-Long	siglip2_b16	-	10	1	25	bert	72.3	72.3
+LIBERO-Goal | SigLIP 2-B/16 | BERT | seed 0	Table 2 (BERT)	LIBERO-Goal	siglip2_b16	-	goal	0	50	bert	78.8	78.8
+LIBERO-Spatial | SigLIP 2-B/16 | BERT | seed 0	Table 2 (BERT)	LIBERO-Spatial	siglip2_b16	-	spatial	0	50	bert	84.1	84.1
+LIBERO-Object | SigLIP 2-B/16 | BERT | seed 0	Table 2 (BERT)	LIBERO-Object	siglip2_b16	-	object	0	50	bert	90.3	90.3
+LIBERO-Long | ALPS | own text tower | seed 1	Table 2 (own text tower); ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Long	alps	ALPS_WEIGHTS	10	1	25	alps_task_embs.npz	78.5	78.5
+LIBERO-Goal | ALPS | own text tower | seed 0	Table 2 (own text tower); ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Goal	alps	ALPS_WEIGHTS	goal	0	50	alps_task_embs.npz	87.4	87.4
+LIBERO-Spatial | ALPS | own text tower | seed 0	Table 2 (own text tower); ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Spatial	alps	ALPS_WEIGHTS	spatial	0	50	alps_task_embs.npz	82.6	82.6
+LIBERO-Object | ALPS | own text tower | seed 0	Table 2 (own text tower); ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Object	alps	ALPS_WEIGHTS	object	0	50	alps_task_embs.npz	93.7	93.7
+LIBERO-Long | CLIP-B/16 | own text tower | seed 1	Table 2 (own text tower)	LIBERO-Long	clip_b16_qg	-	10	1	25	clip_task_embs.npz	61.5	61.5
+LIBERO-Goal | CLIP-B/16 | own text tower | seed 0	Table 2 (own text tower)	LIBERO-Goal	clip_b16_qg	-	goal	0	50	clip_task_embs.npz	84.3	84.3
+LIBERO-Spatial | CLIP-B/16 | own text tower | seed 0	Table 2 (own text tower)	LIBERO-Spatial	clip_b16_qg	-	spatial	0	50	clip_task_embs.npz	79.1	79.1
+LIBERO-Object | CLIP-B/16 | own text tower | seed 0	Table 2 (own text tower)	LIBERO-Object	clip_b16_qg	-	object	0	50	clip_task_embs.npz	91.9	91.9
+LIBERO-Long | C-RADIOv3-B | own text tower | seed 1	Table 2 (own text tower)	LIBERO-Long	cradio_v3_b	RADIO_CKPT	10	1	25	cradio_task_embs.npz	73.4	73.4
+LIBERO-Goal | C-RADIOv3-B | own text tower | seed 0	Table 2 (own text tower)	LIBERO-Goal	cradio_v3_b	RADIO_CKPT	goal	0	50	cradio_task_embs.npz	89.5	89.5
+LIBERO-Spatial | C-RADIOv3-B | own text tower | seed 0	Table 2 (own text tower)	LIBERO-Spatial	cradio_v3_b	RADIO_CKPT	spatial	0	50	cradio_task_embs.npz	82.9	82.9
+LIBERO-Object | C-RADIOv3-B | own text tower | seed 0	Table 2 (own text tower)	LIBERO-Object	cradio_v3_b	RADIO_CKPT	object	0	50	cradio_task_embs.npz	81.4	81.4
+LIBERO-Long | SigLIP 2-B/16 | own text tower | seed 1	Table 2 (own text tower)	LIBERO-Long	siglip2_b16	-	10	1	25	siglip2_task_embs.npz	73.3	73.3
+LIBERO-Goal | SigLIP 2-B/16 | own text tower | seed 0	Table 2 (own text tower)	LIBERO-Goal	siglip2_b16	-	goal	0	50	siglip2_task_embs.npz	90.2	90.2
+LIBERO-Spatial | SigLIP 2-B/16 | own text tower | seed 0	Table 2 (own text tower)	LIBERO-Spatial	siglip2_b16	-	spatial	0	50	siglip2_task_embs.npz	84.1	84.1
+LIBERO-Object | SigLIP 2-B/16 | own text tower | seed 0	Table 2 (own text tower)	LIBERO-Object	siglip2_b16	-	object	0	50	siglip2_task_embs.npz	91.7	91.7
+LIBERO-Long | SigLIP 2-B/16 + Stage 2 | BERT | seed 1	Sec. S3 (SigLIP 2 + Stage 2)	LIBERO-Long	siglip2_b16	SIGLIP2_STAGE2_WEIGHTS	10	1	25	bert	74.4	74.4
+LIBERO-Goal | SigLIP 2-B/16 + Stage 2 | BERT | seed 0	Sec. S3 (SigLIP 2 + Stage 2)	LIBERO-Goal	siglip2_b16	SIGLIP2_STAGE2_WEIGHTS	goal	0	50	bert	79.0	79.0
+LIBERO-Spatial | SigLIP 2-B/16 + Stage 2 | BERT | seed 0	Sec. S3 (SigLIP 2 + Stage 2)	LIBERO-Spatial	siglip2_b16	SIGLIP2_STAGE2_WEIGHTS	spatial	0	50	bert	82.4	82.4
+LIBERO-Long | ALPS | BERT | seed 0	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Long	alps	ALPS_WEIGHTS	10	0	25	bert	-	63.5
+LIBERO-Long | ALPS | BERT | seed 2	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Long	alps	ALPS_WEIGHTS	10	2	25	bert	-	75.3
+LIBERO-Goal | ALPS | BERT | seed 1	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Goal	alps	ALPS_WEIGHTS	goal	1	50	bert	-	79.3
+LIBERO-Goal | ALPS | BERT | seed 2	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Goal	alps	ALPS_WEIGHTS	goal	2	50	bert	-	82.9
+LIBERO-Spatial | ALPS | BERT | seed 1	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Spatial	alps	ALPS_WEIGHTS	spatial	1	50	bert	-	81.5
+LIBERO-Spatial | ALPS | BERT | seed 2	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Spatial	alps	ALPS_WEIGHTS	spatial	2	50	bert	-	82.4
+LIBERO-Object | ALPS | BERT | seed 1	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Object	alps	ALPS_WEIGHTS	object	1	50	bert	-	93.1
+LIBERO-Object | ALPS | BERT | seed 2	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Object	alps	ALPS_WEIGHTS	object	2	50	bert	-	93.7
+LIBERO-Long | ALPS | own text tower | seed 0	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Long	alps	ALPS_WEIGHTS	10	0	25	alps_task_embs.npz	-	76.4
+LIBERO-Long | ALPS | own text tower | seed 2	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Long	alps	ALPS_WEIGHTS	10	2	25	alps_task_embs.npz	-	71.9
+LIBERO-Goal | ALPS | own text tower | seed 1	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Goal	alps	ALPS_WEIGHTS	goal	1	50	alps_task_embs.npz	-	91.1
+LIBERO-Goal | ALPS | own text tower | seed 2	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Goal	alps	ALPS_WEIGHTS	goal	2	50	alps_task_embs.npz	-	85.5
+LIBERO-Spatial | ALPS | own text tower | seed 1	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Spatial	alps	ALPS_WEIGHTS	spatial	1	50	alps_task_embs.npz	-	84.1
+LIBERO-Spatial | ALPS | own text tower | seed 2	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Spatial	alps	ALPS_WEIGHTS	spatial	2	50	alps_task_embs.npz	-	82.8
+LIBERO-Object | ALPS | own text tower | seed 1	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Object	alps	ALPS_WEIGHTS	object	1	50	alps_task_embs.npz	-	94.8
+LIBERO-Object | ALPS | own text tower | seed 2	ALPS retrainings, three per suite and embedding (Sec. S2)	LIBERO-Object	alps	ALPS_WEIGHTS	object	2	50	alps_task_embs.npz	-	93.4
